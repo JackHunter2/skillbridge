@@ -64,7 +64,7 @@ export default function ReviewResult() {
     const minggu = [...new Set(roadmap.map((r) => r.week_no))];
 
     return (
-        <div className="min-h-screen bg-slate-50 p-6">
+        <div>
             <div className="max-w-3xl mx-auto">
                 <Link to="/dashboard" className="text-sm text-blue-600">← Kembali ke dashboard</Link>
 

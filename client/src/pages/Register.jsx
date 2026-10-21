@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Info } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import AuthShell from '../components/layout/AuthShell';
+import Button from '../components/ui/Button';
+import { inputCls, labelCls } from '../components/ui/styles';
+
+const tipe = [
+    ['fresh_graduate', 'Fresh graduate'],
+    ['anak_magang', 'Anak magang'],
+];
 
 export default function Register() {
     const { user, register } = useAuth();
     const navigate = useNavigate();
-    const [form, setForm] = useState({
-        full_name: '', email: '', password: '', user_type: 'fresh_graduate',
-    });
+    const [form, setForm] = useState({ full_name: '', email: '', password: '', user_type: 'fresh_graduate' });
     const [error, setError] = useState('');
     const [busy, setBusy] = useState(false);
 
@@ -29,47 +36,49 @@ export default function Register() {
         }
     };
 
-    const input = 'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500';
-
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-            <form onSubmit={kirim} className="bg-white rounded-2xl shadow p-8 w-full max-w-sm space-y-4">
+        <AuthShell
+            title="Buat akun"
+            subtitle="Mulai reviu portofolio Anda dalam beberapa menit."
+            footer={<>Sudah punya akun? <Link to="/login" className="font-semibold text-brand-600">Masuk</Link></>}
+        >
+            <form onSubmit={kirim} className="space-y-4">
+                {error && (
+                    <div className="flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0" /> {error}
+                    </div>
+                )}
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Daftar</h1>
-                    <p className="text-slate-500 text-sm">Buat akun untuk mulai mereviu portofolio</p>
-                </div>
-
-                {error && <p className="text-sm text-red-600 bg-red-50 rounded-lg p-3">{error}</p>}
-
-                <div>
-                    <label className="text-sm font-medium text-slate-700">Nama lengkap</label>
-                    <input name="full_name" required value={form.full_name} onChange={ubah} className={input} />
-                </div>
-                <div>
-                    <label className="text-sm font-medium text-slate-700">Email</label>
-                    <input name="email" type="email" required value={form.email} onChange={ubah} className={input} />
+                    <label className={labelCls}>Nama lengkap</label>
+                    <input name="full_name" required value={form.full_name} onChange={ubah} className={inputCls} />
                 </div>
                 <div>
-                    <label className="text-sm font-medium text-slate-700">Password (min. 6 karakter)</label>
-                    <input name="password" type="password" required value={form.password} onChange={ubah} className={input} />
+                    <label className={labelCls}>Email</label>
+                    <input name="email" type="email" required value={form.email} onChange={ubah}
+                           placeholder="nama@email.com" className={inputCls} />
                 </div>
                 <div>
-                    <label className="text-sm font-medium text-slate-700">Saya adalah</label>
-                    <select name="user_type" value={form.user_type} onChange={ubah} className={input}>
-                        <option value="fresh_graduate">Fresh graduate</option>
-                        <option value="anak_magang">Anak magang</option>
-                    </select>
+                    <label className={labelCls}>Password</label>
+                    <input name="password" type="password" required value={form.password} onChange={ubah}
+                           placeholder="Minimal 6 karakter" className={inputCls} />
                 </div>
-
-                <button disabled={busy}
-                        className="w-full rounded-lg bg-blue-600 text-white font-medium py-2 hover:bg-blue-700 disabled:opacity-60">
-                    {busy ? 'Memproses...' : 'Daftar'}
-                </button>
-
-                <p className="text-sm text-slate-600 text-center">
-                    Sudah punya akun? <Link to="/login" className="text-blue-600 font-medium">Masuk</Link>
-                </p>
+                <div>
+                    <label className={labelCls}>Saya adalah</label>
+                    <div className="mt-1.5 grid grid-cols-2 gap-2">
+                        {tipe.map(([nilai, label]) => (
+                            <button type="button" key={nilai} onClick={() => setForm({ ...form, user_type: nilai })}
+                                    className={`rounded-lg border px-3 py-2.5 text-sm font-medium transition ${
+                                        form.user_type === nilai
+                                            ? 'border-brand-600 bg-brand-50 text-brand-700 ring-2 ring-brand-600/20'
+                                            : 'border-slate-300 text-slate-600 hover:bg-slate-50'
+                                    }`}>
+                                {label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <Button loading={busy} className="w-full">Daftar</Button>
             </form>
-        </div>
+        </AuthShell>
     );
 }

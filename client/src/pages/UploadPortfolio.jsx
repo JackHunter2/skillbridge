@@ -42,7 +42,7 @@ export default function UploadPortfolio() {
         `flex-1 rounded-lg py-2 text-sm font-medium ${aktif ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'}`;
 
     return (
-        <div className="min-h-screen bg-slate-50 p-6">
+        <div>
             <form onSubmit={kirim} className="max-w-xl mx-auto bg-white rounded-2xl shadow p-8 space-y-4">
                 <div>
                     <h1 className="text-2xl font-bold text-slate-900">Upload portofolio</h1>

@@ -5,12 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="005e2fa6-3d88-472d-be62-cdef80a2ec8f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/review/FeedbackForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/controllers/feedback.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/routes/feedback.routes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/layout/AppLayout.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/layout/AuthShell.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/layout/Brand.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/review/ReviewingOverlay.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/ui/Button.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/ui/styles.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Landing.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/utils/score.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Register.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/ReviewResult.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ReviewResult.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/UploadPortfolio.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/UploadPortfolio.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1792545111048</updated>
-      <workItem from="1792545113499" duration="20587000" />
+      <workItem from="1792545113499" duration="24664000" />
     </task>
     <servers />
   </component>

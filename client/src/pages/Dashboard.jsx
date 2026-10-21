@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { FileText, FolderOpen, Info, Link2, Plus, Sparkles, Target, TrendingUp } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import Button from '../components/ui/Button';
+import ReviewingOverlay from '../components/review/ReviewingOverlay';
+import { scoreTone } from '../utils/score';
 
 export default function Dashboard() {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const [roleName, setRoleName] = useState('');
     const [portfolios, setPortfolios] = useState([]);
+    const [loadingList, setLoadingList] = useState(true);
     const [busyId, setBusyId] = useState(null);
     const [error, setError] = useState('');
 
@@ -17,7 +22,9 @@ export default function Dashboard() {
             const r = res.data.roles.find((x) => x.role_id === user.target_role_id);
             setRoleName(r ? r.role_name : '');
         });
-        api.get('/portfolios').then((res) => setPortfolios(res.data.portfolios));
+        api.get('/portfolios')
+            .then((res) => setPortfolios(res.data.portfolios))
+            .finally(() => setLoadingList(false));
     }, [user.target_role_id]);
 
     if (!user.target_role_id) return <Navigate to="/onboarding" replace />;
@@ -46,82 +53,113 @@ export default function Dashboard() {
         }
     };
 
+    const terbaru = portfolios.find((p) => p.latest_score != null);
+    const nadaTerbaru = terbaru ? scoreTone(Number(terbaru.latest_score)) : null;
+    const namaDepan = user.full_name.split(' ')[0];
+
+    const stat = 'rounded-2xl border border-slate-200 bg-white p-5';
+    const ikon = 'flex h-10 w-10 items-center justify-center rounded-xl';
+
     return (
-        <div className="min-h-screen bg-slate-50 p-6">
-            <div className="max-w-3xl mx-auto">
-                <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-                    <button onClick={logout}
-                            className="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-white">
-                        Keluar
-                    </button>
-                </div>
+        <div className="fade-up">
+            {busyId && <ReviewingOverlay />}
 
-                <div className="mt-6 bg-white rounded-2xl shadow p-6">
-                    <p className="text-slate-500 text-sm">Selamat datang,</p>
-                    <p className="text-xl font-semibold text-slate-900">{user.full_name}</p>
-                    <p className="text-slate-500 text-sm mt-1">
-                        {user.email} • {user.user_type === 'anak_magang' ? 'Anak magang' : 'Fresh graduate'}
+            <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">Halo, {namaDepan}</h1>
+                    <p className="mt-1 text-slate-500">Unggah portofolio, lalu biarkan AI menunjukkan apa yang bisa ditingkatkan.</p>
+                </div>
+                <Button as={Link} to="/upload"><Plus className="h-4 w-4" /> Upload portofolio</Button>
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div className={stat}>
+                    <span className={`${ikon} bg-brand-50 text-brand-600`}><FolderOpen className="h-5 w-5" /></span>
+                    <p className="mt-4 text-3xl font-extrabold text-navy">{portfolios.length}</p>
+                    <p className="text-sm text-slate-500">Portofolio diunggah</p>
+                </div>
+                <div className={stat}>
+                    <span className={`${ikon} bg-accent-50 text-accent-600`}><TrendingUp className="h-5 w-5" /></span>
+                    <p className="mt-4 text-3xl font-extrabold text-navy">
+                        {terbaru ? Math.round(terbaru.latest_score) : '—'}
                     </p>
-
-                    <div className="mt-4 flex items-center justify-between rounded-xl bg-blue-50 p-4">
-                        <div>
-                            <p className="text-xs text-blue-700 font-medium">PERAN TARGET</p>
-                            <p className="font-semibold text-slate-900">{roleName || '...'}</p>
-                        </div>
-                        <Link to="/onboarding" className="text-sm text-blue-600 font-medium">Ganti</Link>
-                    </div>
+                    <p className="text-sm text-slate-500">
+                        Skor terbaru{nadaTerbaru && <span className={`ml-2 font-semibold ${nadaTerbaru.text}`}>{nadaTerbaru.label}</span>}
+                    </p>
                 </div>
-
-                <div className="mt-6 bg-white rounded-2xl shadow p-6">
-                    <div className="flex items-center justify-between">
-                        <h2 className="font-semibold text-slate-900">Portofolio Anda</h2>
-                        <Link to="/upload"
-                              className="rounded-lg bg-blue-600 text-white text-sm font-medium px-4 py-2 hover:bg-blue-700">
-                            + Upload
-                        </Link>
-                    </div>
-
-                    {error && <p className="mt-4 text-sm text-red-600 bg-red-50 rounded-lg p-3">{error}</p>}
-                    {busyId && (
-                        <p className="mt-4 text-sm text-blue-700 bg-blue-50 rounded-lg p-3">
-                            AI sedang menilai portofolio Anda. Proses ini bisa memakan 10–40 detik, jangan tutup halaman.
-                        </p>
-                    )}
-
-                    {portfolios.length === 0 ? (
-                        <p className="text-sm text-slate-500 mt-4">Belum ada portofolio. Upload yang pertama.</p>
-                    ) : (
-                        <ul className="mt-4 divide-y divide-slate-100">
-                            {portfolios.map((p) => (
-                                <li key={p.portfolio_id} className="py-3 flex items-center justify-between gap-3">
-                                    <div>
-                                        <p className="font-medium text-slate-900">{p.title}</p>
-                                        <p className="text-xs text-slate-400">
-                                            {p.source_type === 'file' ? 'File PDF' : 'Link'} •{' '}
-                                            {new Date(p.uploaded_at).toLocaleDateString('id-ID')}
-                                            {p.latest_score != null && <> • Skor terakhir {Math.round(p.latest_score)}</>}
-                                        </p>
-                                    </div>
-                                    <div className="flex items-center gap-2 shrink-0">
-                                        {p.latest_review_id && (
-                                            <Link to={`/reviews/${p.latest_review_id}`}
-                                                  className="text-sm text-blue-600 font-medium">Lihat hasil</Link>
-                                        )}
-                                        <button
-                                            onClick={() => jalankanReviu(p)}
-                                            disabled={busyId !== null}
-                                            className="rounded-lg bg-blue-600 text-white text-sm font-medium px-3 py-1.5 hover:bg-blue-700 disabled:opacity-50"
-                                        >
-                                            {busyId === p.portfolio_id ? 'Menilai...' : p.latest_review_id ? 'Reviu ulang' : 'Reviu AI'}
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                <div className={stat}>
+                    <span className={`${ikon} bg-amber-50 text-amber-600`}><Target className="h-5 w-5" /></span>
+                    <p className="mt-4 text-xl font-extrabold text-navy">{roleName || '...'}</p>
+                    <p className="text-sm text-slate-500">
+                        Peran target <Link to="/onboarding" className="ml-1 font-semibold text-brand-600">Ganti</Link>
+                    </p>
                 </div>
             </div>
+
+            <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+                <h2 className="font-bold text-navy">Portofolio Anda</h2>
+
+                {error && (
+                    <div className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0" /> {error}
+                    </div>
+                )}
+
+                {loadingList ? (
+                    <div className="mt-4 space-y-3">
+                        {[1, 2].map((n) => <div key={n} className="h-20 animate-pulse rounded-xl bg-slate-100" />)}
+                    </div>
+                ) : portfolios.length === 0 ? (
+                    <div className="mt-6 rounded-xl border-2 border-dashed border-slate-200 py-12 text-center">
+            <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+              <Sparkles className="h-6 w-6" />
+            </span>
+                        <p className="mt-4 font-semibold text-navy">Belum ada portofolio</p>
+                        <p className="mt-1 text-sm text-slate-500">Unggah yang pertama untuk mendapatkan skor dan saran.</p>
+                        <div className="mt-5"><Button as={Link} to="/upload">Upload sekarang</Button></div>
+                    </div>
+                ) : (
+                    <ul className="mt-4 space-y-3">
+                        {portfolios.map((p) => {
+                            const nada = p.latest_score != null ? scoreTone(Number(p.latest_score)) : null;
+                            return (
+                                <li key={p.portfolio_id}
+                                    className="flex flex-col gap-4 rounded-xl border border-slate-200 p-4 transition hover:border-slate-300 hover:shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                                    <div className="flex min-w-0 items-center gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                      {p.source_type === 'file' ? <FileText className="h-5 w-5" /> : <Link2 className="h-5 w-5" />}
+                    </span>
+                                        <div className="min-w-0">
+                                            <p className="truncate font-semibold text-slate-900">{p.title}</p>
+                                            <p className="text-xs text-slate-500">
+                                                {p.source_type === 'file' ? 'File PDF' : 'Link'} •{' '}
+                                                {new Date(p.uploaded_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {nada && (
+                                            <span className={`rounded-full px-3 py-1 text-xs font-bold ${nada.bg} ${nada.text}`}>
+                        Skor {Math.round(p.latest_score)}
+                      </span>
+                                        )}
+                                        {p.latest_review_id && (
+                                            <Button as={Link} to={`/reviews/${p.latest_review_id}`} variant="secondary" size="sm">
+                                                Lihat hasil
+                                            </Button>
+                                        )}
+                                        <Button size="sm" onClick={() => jalankanReviu(p)} disabled={busyId !== null}>
+                                            <Sparkles className="h-4 w-4" />
+                                            {p.latest_review_id ? 'Reviu ulang' : 'Reviu AI'}
+                                        </Button>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </section>
         </div>
     );
 }
