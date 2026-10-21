@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
 import UploadPortfolio from './pages/UploadPortfolio';
+import ReviewResult from './pages/ReviewResult';
 
 export default function App() {
     return (
@@ -16,6 +17,7 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/upload" element={<UploadPortfolio />} />
+                <Route path="/reviews/:id" element={<ReviewResult />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

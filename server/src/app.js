@@ -8,6 +8,7 @@ import portfolioRoutes from './routes/portfolio.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 
 const app = express();
+app.set('etag', false);
 
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
 app.use(express.json());
