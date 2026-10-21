@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes.js';
 import roleRoutes from './routes/role.routes.js';
 import userRoutes from './routes/user.routes.js';
 import portfolioRoutes from './routes/portfolio.routes.js';
+import reviewRoutes from './routes/review.routes.js';
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/portfolios', portfolioRoutes);
+app.use('/api/reviews', reviewRoutes);
+
 
 app.use((err, req, res, next) => {
     console.error(err);

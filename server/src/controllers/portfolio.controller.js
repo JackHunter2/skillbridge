@@ -68,11 +68,17 @@ export async function createPortfolio(req, res) {
 
 export async function listPortfolios(req, res) {
     const [rows] = await pool.query(
-        `SELECT portfolio_id, title, source_type, external_url, version_no, uploaded_at,
-            CHAR_LENGTH(extracted_text) AS text_length
-       FROM portfolios
-      WHERE user_id = ?
-      ORDER BY uploaded_at DESC`,
+        `SELECT p.portfolio_id, p.title, p.source_type, p.external_url, p.version_no, p.uploaded_at,
+                CHAR_LENGTH(p.extracted_text) AS text_length,
+                (SELECT r.review_id FROM ai_reviews r
+                 WHERE r.portfolio_id = p.portfolio_id AND r.status = 'done'
+                 ORDER BY r.created_at DESC LIMIT 1) AS latest_review_id,
+            (SELECT r.overall_score FROM ai_reviews r
+              WHERE r.portfolio_id = p.portfolio_id AND r.status = 'done'
+              ORDER BY r.created_at DESC LIMIT 1) AS latest_score
+         FROM portfolios p
+         WHERE p.user_id = ?
+         ORDER BY p.uploaded_at DESC`,
         [req.user.id]
     );
     res.json({ portfolios: rows });
