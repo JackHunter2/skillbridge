@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="005e2fa6-3d88-472d-be62-cdef80a2ec8f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/controllers/role.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/routes/role.routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/routes/user.routes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/UploadPortfolio.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/controllers/portfolio.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/middlewares/upload.middleware.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/routes/portfolio.routes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/context/AuthContext.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,7 +78,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1792545111048</updated>
-      <workItem from="1792545113499" duration="8394000" />
+      <workItem from="1792545113499" duration="10373000" />
     </task>
     <servers />
   </component>

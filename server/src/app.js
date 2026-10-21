@@ -4,6 +4,7 @@ import { pool } from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 import roleRoutes from './routes/role.routes.js';
 import userRoutes from './routes/user.routes.js';
+import portfolioRoutes from './routes/portfolio.routes.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/api/health', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/portfolios', portfolioRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);

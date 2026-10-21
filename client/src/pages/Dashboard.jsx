@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 export default function Dashboard() {
     const { user, logout } = useAuth();
     const [roleName, setRoleName] = useState('');
+    const [portfolios, setPortfolios] = useState([]);
 
     useEffect(() => {
         if (!user.target_role_id) return;
@@ -13,6 +14,7 @@ export default function Dashboard() {
             const r = res.data.roles.find((x) => x.role_id === user.target_role_id);
             setRoleName(r ? r.role_name : '');
         });
+        api.get('/portfolios').then((res) => setPortfolios(res.data.portfolios));
     }, [user.target_role_id]);
 
     if (!user.target_role_id) return <Navigate to="/onboarding" replace />;
@@ -42,6 +44,34 @@ export default function Dashboard() {
                         </div>
                         <Link to="/onboarding" className="text-sm text-blue-600 font-medium">Ganti</Link>
                     </div>
+                </div>
+
+                <div className="mt-6 bg-white rounded-2xl shadow p-6">
+                    <div className="flex items-center justify-between">
+                        <h2 className="font-semibold text-slate-900">Portofolio Anda</h2>
+                        <Link to="/upload"
+                              className="rounded-lg bg-blue-600 text-white text-sm font-medium px-4 py-2 hover:bg-blue-700">
+                            + Upload
+                        </Link>
+                    </div>
+
+                    {portfolios.length === 0 ? (
+                        <p className="text-sm text-slate-500 mt-4">Belum ada portofolio. Upload yang pertama.</p>
+                    ) : (
+                        <ul className="mt-4 divide-y divide-slate-100">
+                            {portfolios.map((p) => (
+                                <li key={p.portfolio_id} className="py-3 flex items-center justify-between">
+                                    <div>
+                                        <p className="font-medium text-slate-900">{p.title}</p>
+                                        <p className="text-xs text-slate-400">
+                                            {p.source_type === 'file' ? 'File PDF' : 'Link'} • {p.text_length} karakter •{' '}
+                                            {new Date(p.uploaded_at).toLocaleDateString('id-ID')}
+                                        </p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </div>
         </div>
