@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api from '../services/api';
+import FeedbackForm from '../components/review/FeedbackForm';
 
 const barWarna = (n) => (n >= 75 ? 'bg-emerald-500' : n >= 50 ? 'bg-amber-500' : 'bg-red-500');
 const strokeWarna = (n) => (n >= 75 ? '#10b981' : n >= 50 ? '#f59e0b' : '#ef4444');
@@ -166,7 +167,7 @@ export default function ReviewResult() {
                         ))}
                     </div>
                 </Kartu>
-
+                <FeedbackForm reviewId={review.review_id} />
                 <p className="text-xs text-slate-400 text-center mt-6">
                     Reviu dibuat oleh AI dan bersifat masukan awal, bukan penilaian final.
                 </p>
