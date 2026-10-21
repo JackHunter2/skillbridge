@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { pool } from './config/db.js';
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 
@@ -14,6 +15,13 @@ app.get('/api/health', async (req, res) => {
     } catch (err) {
         res.status(500).json({ status: 'error', message: err.message });
     }
+});
+
+app.use('/api/auth', authRoutes);
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ message: 'Terjadi kesalahan pada server' });
 });
 
 export default app;

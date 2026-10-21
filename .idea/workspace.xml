@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="005e2fa6-3d88-472d-be62-cdef80a2ec8f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/config/db.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/controllers/auth.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/middlewares/auth.middleware.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/routes/auth.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/upskilling_platform.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/upskilling_platform.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1792545111048</updated>
-      <workItem from="1792545113499" duration="4749000" />
+      <workItem from="1792545113499" duration="6381000" />
     </task>
     <servers />
   </component>
