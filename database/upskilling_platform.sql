@@ -173,7 +173,7 @@ CREATE TABLE skill_gaps (
   skill_id        INT UNSIGNED NOT NULL,
   current_level   TINYINT UNSIGNED NOT NULL DEFAULT 0,
   required_level  TINYINT UNSIGNED NOT NULL,
-  gap_size        TINYINT GENERATED ALWAYS AS (required_level - current_level) STORED,
+  gap_size        TINYINT GENERATED ALWAYS AS (GREATEST(CAST(required_level AS SIGNED) - CAST(current_level AS SIGNED), 0)) STORED,
   PRIMARY KEY (gap_id),
   UNIQUE KEY uq_gap (review_id, skill_id),
   CONSTRAINT fk_gap_review FOREIGN KEY (review_id) REFERENCES ai_reviews(review_id) ON DELETE CASCADE,

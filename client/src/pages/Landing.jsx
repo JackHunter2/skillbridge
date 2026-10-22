@@ -182,7 +182,7 @@ export default function Landing() {
             </section>
 
             <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-500">
-                {APP_NAME} • Dikembangkan dengan pendekatan Design Thinking
+                {APP_NAME} • Dikembangkan oleh Abdul Rachman Ibrahim
             </footer>
         </div>
     );

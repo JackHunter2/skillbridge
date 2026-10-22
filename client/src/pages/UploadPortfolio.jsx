@@ -1,16 +1,35 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FileText, Info, Link2, UploadCloud, X } from 'lucide-react';
 import api from '../services/api';
+import Button from '../components/ui/Button';
+import { inputCls, labelCls } from '../components/ui/styles';
+import { useAuth } from '../context/AuthContext';
+import { getTeks } from '../utils/userType';
+
+const MAKS = 5 * 1024 * 1024;
+const ukuran = (b) => (b > 1024 * 1024 ? `${(b / 1024 / 1024).toFixed(1)} MB` : `${Math.round(b / 1024)} KB`);
 
 export default function UploadPortfolio() {
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const teks = getTeks(user.user_type);
     const [mode, setMode] = useState('file');
     const [title, setTitle] = useState('');
     const [file, setFile] = useState(null);
     const [url, setUrl] = useState('');
     const [text, setText] = useState('');
+    const [drag, setDrag] = useState(false);
     const [error, setError] = useState('');
     const [busy, setBusy] = useState(false);
+
+    const pilihFile = (f) => {
+        setError('');
+        if (!f) return;
+        if (f.type !== 'application/pdf') return setError('Hanya file PDF yang diperbolehkan');
+        if (f.size > MAKS) return setError('Ukuran file maksimal 5 MB');
+        setFile(f);
+    };
 
     const kirim = async (e) => {
         e.preventDefault();
@@ -37,62 +56,100 @@ export default function UploadPortfolio() {
         }
     };
 
-    const input = 'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500';
     const tab = (aktif) =>
-        `flex-1 rounded-lg py-2 text-sm font-medium ${aktif ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'}`;
+        `flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition ${
+            aktif ? 'bg-white text-navy shadow-sm' : 'text-slate-600 hover:text-navy'
+        }`;
 
     return (
-        <div>
-            <form onSubmit={kirim} className="max-w-xl mx-auto bg-white rounded-2xl shadow p-8 space-y-4">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Upload portofolio</h1>
-                    <p className="text-slate-500 text-sm">CV atau portofolio Anda akan dinilai oleh AI.</p>
-                </div>
+        <div className="fade-up mx-auto max-w-xl">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Langkah 2 dari 2</span>
+            <h1 className="mt-2 text-2xl font-extrabold text-navy sm:text-3xl">{teks.judulUpload}</h1>
+            <p className="mt-2 text-slate-500">Isinya akan dinilai oleh AI sesuai peran target Anda.</p>
 
-                {error && <p className="text-sm text-red-600 bg-red-50 rounded-lg p-3">{error}</p>}
+            <div className="mt-6 rounded-xl border border-brand-100 bg-brand-50/60 p-4 text-sm text-slate-700">
+                <p className="font-semibold text-brand-700">Untuk {teks.label.toLowerCase()}</p>
+                <p className="mt-1">{teks.petunjukUpload}</p>
+            </div>
+
+            <form onSubmit={kirim} className="mt-8 space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
+                {error && (
+                    <div className="flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0" /> {error}
+                    </div>
+                )}
 
                 <div>
-                    <label className="text-sm font-medium text-slate-700">Judul</label>
+                    <label className={labelCls}>Judul</label>
                     <input value={title} onChange={(e) => setTitle(e.target.value)} required
-                           placeholder="Contoh: CV Data Analyst 2026" className={input} />
+                           placeholder={teks.contohJudul} className={inputCls} />
                 </div>
 
-                <div className="flex gap-2">
-                    <button type="button" onClick={() => setMode('file')} className={tab(mode === 'file')}>File PDF</button>
-                    <button type="button" onClick={() => setMode('link')} className={tab(mode === 'link')}>Link</button>
+                <div className="flex gap-1 rounded-xl bg-slate-100 p-1">
+                    <button type="button" onClick={() => setMode('file')} className={tab(mode === 'file')}>
+                        <FileText className="h-4 w-4" /> File PDF
+                    </button>
+                    <button type="button" onClick={() => setMode('link')} className={tab(mode === 'link')}>
+                        <Link2 className="h-4 w-4" /> Link
+                    </button>
                 </div>
 
                 {mode === 'file' ? (
-                    <div>
-                        <label className="text-sm font-medium text-slate-700">File PDF (maks. 5 MB)</label>
-                        <input type="file" accept="application/pdf"
-                               onChange={(e) => setFile(e.target.files[0] || null)}
-                               className="mt-1 block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-blue-700" />
-                        <p className="text-xs text-slate-400 mt-2">Gunakan PDF yang teksnya bisa diblok, bukan hasil scan/gambar.</p>
-                    </div>
+                    file ? (
+                        <div className="flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50/60 p-4">
+                            <div className="flex min-w-0 items-center gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-emerald-600">
+                  <FileText className="h-5 w-5" />
+                </span>
+                                <div className="min-w-0">
+                                    <p className="truncate text-sm font-semibold text-slate-900">{file.name}</p>
+                                    <p className="text-xs text-slate-500">{ukuran(file.size)}</p>
+                                </div>
+                            </div>
+                            <button type="button" onClick={() => setFile(null)}
+                                    className="rounded-lg p-2 text-slate-500 hover:bg-white" title="Hapus file">
+                                <X className="h-4 w-4" />
+                            </button>
+                        </div>
+                    ) : (
+                        <label
+                            onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
+                            onDragLeave={() => setDrag(false)}
+                            onDrop={(e) => { e.preventDefault(); setDrag(false); pilihFile(e.dataTransfer.files[0]); }}
+                            className={`flex cursor-pointer flex-col items-center rounded-xl border-2 border-dashed px-6 py-10 text-center transition ${
+                                drag ? 'border-brand-600 bg-brand-50' : 'border-slate-300 hover:border-brand-500 hover:bg-slate-50'
+                            }`}>
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                <UploadCloud className="h-6 w-6" />
+              </span>
+                            <p className="mt-4 text-sm font-semibold text-navy">Tarik file ke sini atau klik untuk memilih</p>
+                            <p className="mt-1 text-xs text-slate-500">PDF, maksimal 5 MB. Gunakan PDF yang teksnya bisa diblok, bukan hasil scan.</p>
+                            <input type="file" accept="application/pdf" className="hidden"
+                                   onChange={(e) => pilihFile(e.target.files[0])} />
+                        </label>
+                    )
                 ) : (
                     <>
                         <div>
-                            <label className="text-sm font-medium text-slate-700">Link portofolio</label>
+                            <label className={labelCls}>Link portofolio</label>
                             <input value={url} onChange={(e) => setUrl(e.target.value)} required
-                                   placeholder="https://..." className={input} />
+                                   placeholder="https://..." className={inputCls} />
                         </div>
                         <div>
-                            <label className="text-sm font-medium text-slate-700">Isi / deskripsi portofolio</label>
+                            <label className={labelCls}>Isi / deskripsi portofolio</label>
                             <textarea value={text} onChange={(e) => setText(e.target.value)} rows={8} required
-                                      placeholder="Tempel teks portofolio Anda: proyek, peran, tools, dan hasil yang dicapai..."
-                                      className={input} />
-                            <p className="text-xs text-slate-400 mt-1">Minimal 100 karakter. AI menilai dari teks yang Anda tempel.</p>
+                                      placeholder={teks.contohIsi}
+                                      className={inputCls} />
+                            <p className={`mt-1 text-xs ${text.trim().length >= 100 ? 'text-emerald-600' : 'text-slate-400'}`}>
+                                {text.trim().length}/100 karakter minimal. AI menilai dari teks yang Anda tempel.
+                            </p>
                         </div>
                     </>
                 )}
 
-                <div className="flex items-center gap-3">
-                    <button disabled={busy}
-                            className="rounded-lg bg-blue-600 text-white font-medium px-6 py-2 hover:bg-blue-700 disabled:opacity-60">
-                        {busy ? 'Mengunggah...' : 'Unggah'}
-                    </button>
-                    <Link to="/dashboard" className="text-sm text-slate-600">Batal</Link>
+                <div className="flex items-center gap-3 pt-1">
+                    <Button loading={busy}>Unggah</Button>
+                    <Button as={Link} to="/dashboard" variant="ghost">Batal</Button>
                 </div>
             </form>
         </div>

@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
 import UploadPortfolio from './pages/UploadPortfolio';
 import ReviewResult from './pages/ReviewResult';
+import NotFound from './pages/NotFound';
 
 export default function App() {
     return (
@@ -22,6 +23,7 @@ export default function App() {
                     <Route path="/onboarding" element={<Onboarding />} />
                     <Route path="/upload" element={<UploadPortfolio />} />
                     <Route path="/reviews/:id" element={<ReviewResult />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Route>
 

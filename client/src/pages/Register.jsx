@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthShell from '../components/layout/AuthShell';
 import Button from '../components/ui/Button';
 import { inputCls, labelCls } from '../components/ui/styles';
+import { getTeks } from '../utils/userType';
 
 const tipe = [
     ['fresh_graduate', 'Fresh graduate'],
@@ -76,6 +77,7 @@ export default function Register() {
                             </button>
                         ))}
                     </div>
+                    <p className="mt-2 text-xs text-slate-500">{getTeks(form.user_type).deskripsiDaftar}</p>
                 </div>
                 <Button loading={busy} className="w-full">Daftar</Button>
             </form>

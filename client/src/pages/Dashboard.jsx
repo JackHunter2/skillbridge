@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
 import ReviewingOverlay from '../components/review/ReviewingOverlay';
 import { scoreTone } from '../utils/score';
+import { getTeks } from '../utils/userType';
 
 export default function Dashboard() {
     const { user } = useAuth();
@@ -56,6 +57,7 @@ export default function Dashboard() {
     const terbaru = portfolios.find((p) => p.latest_score != null);
     const nadaTerbaru = terbaru ? scoreTone(Number(terbaru.latest_score)) : null;
     const namaDepan = user.full_name.split(' ')[0];
+    const teks = getTeks(user.user_type);
 
     const stat = 'rounded-2xl border border-slate-200 bg-white p-5';
     const ikon = 'flex h-10 w-10 items-center justify-center rounded-xl';
@@ -66,8 +68,11 @@ export default function Dashboard() {
 
             <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">Halo, {namaDepan}</h1>
-                    <p className="mt-1 text-slate-500">Unggah portofolio, lalu biarkan AI menunjukkan apa yang bisa ditingkatkan.</p>
+          <span className="inline-block rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-700">
+            {teks.label}
+          </span>
+                    <h1 className="mt-2 text-2xl font-extrabold text-navy sm:text-3xl">Halo, {namaDepan}</h1>
+                    <p className="mt-1 max-w-xl text-slate-500">{teks.sapaan}</p>
                 </div>
                 <Button as={Link} to="/upload"><Plus className="h-4 w-4" /> Upload portofolio</Button>
             </div>
@@ -115,7 +120,7 @@ export default function Dashboard() {
               <Sparkles className="h-6 w-6" />
             </span>
                         <p className="mt-4 font-semibold text-navy">Belum ada portofolio</p>
-                        <p className="mt-1 text-sm text-slate-500">Unggah yang pertama untuk mendapatkan skor dan saran.</p>
+                        <p className="mt-1 text-sm text-slate-500">{teks.kosong}</p>
                         <div className="mt-5"><Button as={Link} to="/upload">Upload sekarang</Button></div>
                     </div>
                 ) : (
@@ -159,6 +164,17 @@ export default function Dashboard() {
                         })}
                     </ul>
                 )}
+            </section>
+            <section className="mt-6 rounded-2xl border border-amber-200 bg-amber-50/60 p-6">
+                <h2 className="font-bold text-navy">{teks.judulTips}</h2>
+                <ul className="mt-3 space-y-2">
+                    {teks.tips.map((t) => (
+                        <li key={t} className="flex gap-2 text-sm text-slate-700">
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                            {t}
+                        </li>
+                    ))}
+                </ul>
             </section>
         </div>
     );

@@ -83,3 +83,15 @@ export async function listPortfolios(req, res) {
     );
     res.json({ portfolios: rows });
 }
+
+export async function reviewHistory(req, res) {
+    const [rows] = await pool.query(
+        `SELECT r.review_id, r.overall_score, r.created_at, p.title
+       FROM ai_reviews r JOIN portfolios p ON p.portfolio_id = r.portfolio_id
+      WHERE p.user_id = ? AND r.status = 'done'
+      ORDER BY r.created_at DESC
+      LIMIT 20`,
+        [req.user.id]
+    );
+    res.json({ history: rows.reverse() });
+}

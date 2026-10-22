@@ -1,9 +1,9 @@
 import { pool } from '../config/db.js';
 import { generateReview } from '../services/aiReview.service.js';
 
-async function prosesReview({ reviewId, roleName, criteria, roleSkills, text, userId }) {
+async function prosesReview({ reviewId, roleName, criteria, roleSkills, text, userId, userType }) {
     try {
-        const result = await generateReview({ roleName, criteria, roleSkills, text });
+        const result = await generateReview({ roleName, criteria, roleSkills, text, userType });
 
         const totalBobot = criteria.reduce((a, c) => a + Number(c.weight), 0);
         const overall =
@@ -84,6 +84,7 @@ export async function createReview(req, res) {
         'SELECT portfolio_id, role_id, extracted_text FROM portfolios WHERE portfolio_id = ? AND user_id = ?',
         [portfolioId, req.user.id]
     );
+    const [usr] = await pool.query('SELECT user_type FROM users WHERE user_id = ?', [req.user.id]);
     if (!pf[0]) return res.status(404).json({ message: 'Portofolio tidak ditemukan' });
 
     // Jika masih ada reviu yang berjalan (< 5 menit), pakai itu agar tidak dobel
@@ -124,6 +125,7 @@ export async function createReview(req, res) {
         roleSkills,
         text: pf[0].extracted_text,
         userId: req.user.id,
+        userType: usr[0]?.user_type,
     });
 }
 

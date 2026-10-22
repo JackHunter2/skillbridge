@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-    PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer,
+    CartesianGrid, Line, LineChart, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart,
+    ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts';
 import { ArrowLeft, Check, Compass, Gauge, Lightbulb, Printer, Target } from 'lucide-react';
 import api from '../services/api';
@@ -54,6 +55,7 @@ export default function ReviewResult() {
     const [tab, setTab] = useState('ringkasan');
     const [filter, setFilter] = useState('semua');
     const [items, setItems] = useState([]);
+    const [history, setHistory] = useState([]);
 
     useEffect(() => {
         api.get(`/reviews/${id}`)
@@ -63,6 +65,12 @@ export default function ReviewResult() {
             })
             .catch((err) => setError(err.response?.data?.message || 'Gagal memuat hasil reviu'));
     }, [id]);
+
+    useEffect(() => {
+        api.get('/portfolios/history')
+            .then((res) => setHistory(res.data.history))
+            .catch(() => {});
+    }, []);
 
     const centang = async (it) => {
         const berikut = it.status === 'selesai' ? 'belum' : 'selesai';
@@ -102,6 +110,8 @@ export default function ReviewResult() {
     const persen = items.length ? Math.round((selesai / items.length) * 100) : 0;
     const gapAktif = gaps.filter((g) => g.gap_size > 0).length;
     const radar = scores.map((s) => ({ aspek: s.criteria_name, nilai: Number(s.score) }));
+    const riwayat = history.map((h, i) => ({ nama: `#${i + 1}`, skor: Math.round(Number(h.overall_score)) }));
+    const selisih = riwayat.length > 1 ? riwayat[riwayat.length - 1].skor - riwayat[0].skor : 0;
     const saranTampil = suggestions.filter((s) => filter === 'semua' || s.priority === filter);
     const prioritasUtama = suggestions.slice(0, 3);
     const tanggal = new Date(review.created_at).toLocaleDateString('id-ID', {
@@ -188,6 +198,33 @@ export default function ReviewResult() {
                         </div>
                     </div>
                 </section>
+
+                {riwayat.length > 1 && (
+                    <section className={kartu}>
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                                <h2 className="font-bold text-navy">Perkembangan skor</h2>
+                                <p className="text-xs text-slate-500">Semua reviu Anda, urut dari yang paling awal</p>
+                            </div>
+                            <span className={`rounded-full px-3 py-1 text-xs font-bold ${
+                                selisih >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'
+                            }`}>
+                {selisih >= 0 ? '+' : ''}{selisih} poin sejak reviu pertama
+              </span>
+                        </div>
+                        <div className="mt-4 h-52">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={riwayat} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
+                                    <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" />
+                                    <XAxis dataKey="nama" tick={{ fontSize: 12, fill: '#64748b' }} />
+                                    <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#64748b' }} />
+                                    <Tooltip formatter={(v) => [`${v}`, 'Skor']} />
+                                    <Line type="monotone" dataKey="skor" stroke="#1e6fd9" strokeWidth={3} dot={{ r: 4 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </section>
+                )}
 
                 {prioritasUtama.length > 0 && (
                     <section className={kartu}>

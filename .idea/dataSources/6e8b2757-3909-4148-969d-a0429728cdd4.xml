@@ -1153,7 +1153,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="296" parent="1" name="upskilling_platform">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-10-22.00:38:55</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-10-22.01:09:33</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </schema>
     <user id="297" parent="1" name="abdul"/>
@@ -1948,7 +1948,7 @@ skill_id</ColNames>
     </column>
     <column id="459" parent="313" name="gap_size">
       <ColumnKind>generated-stored</ColumnKind>
-      <DefaultExpression>(`required_level` - `current_level`)</DefaultExpression>
+      <DefaultExpression>greatest((cast(`required_level` as signed) - cast(`current_level` as signed)),0)</DefaultExpression>
       <Position>6</Position>
       <StoredType>tinyint|0s</StoredType>
     </column>
