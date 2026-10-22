@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Upload } from 'lucide-react';
+import { LayoutDashboard, LogOut, Upload, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Brand from './Brand';
 
@@ -30,6 +30,9 @@ export default function AppLayout() {
                             </NavLink>
                             <NavLink to="/upload" className={link}>
                                 <Upload className="h-4 w-4" /> Upload
+                            </NavLink>
+                            <NavLink to="/profile" className={link}>
+                                <User className="h-4 w-4" /> Profil
                             </NavLink>
                         </nav>
                     </div>

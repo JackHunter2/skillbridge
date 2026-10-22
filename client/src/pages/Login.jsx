@@ -49,7 +49,12 @@ export default function Login() {
                            placeholder="nama@email.com" className={inputCls} />
                 </div>
                 <div>
-                    <label className={labelCls}>Password</label>
+                    <div className="flex items-center justify-between">
+                        <label className={labelCls}>Password</label>
+                        <Link to="/forgot-password" className="text-xs font-semibold text-brand-600 hover:underline">
+                            Lupa password?
+                        </Link>
+                    </div>
                     <input name="password" type="password" required value={form.password} onChange={ubah}
                            className={inputCls} />
                 </div>

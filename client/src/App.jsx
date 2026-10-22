@@ -9,6 +9,9 @@ import Onboarding from './pages/Onboarding';
 import UploadPortfolio from './pages/UploadPortfolio';
 import ReviewResult from './pages/ReviewResult';
 import NotFound from './pages/NotFound';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import Profile from './pages/Profile';
 
 export default function App() {
     return (
@@ -16,6 +19,8 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route element={<ProtectedRoute />}>
                 <Route element={<AppLayout />}>
@@ -24,6 +29,7 @@ export default function App() {
                     <Route path="/upload" element={<UploadPortfolio />} />
                     <Route path="/reviews/:id" element={<ReviewResult />} />
                     <Route path="*" element={<NotFound />} />
+                    <Route path="/profile" element={<Profile />} />
                 </Route>
             </Route>
 

@@ -5,24 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="005e2fa6-3d88-472d-be62-cdef80a2ec8f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/NotFound.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/utils/userType.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/list-groq.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/ForgotPassword.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Profile.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/ResetPassword.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/controllers/profile.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/utils/mailer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/6e8b2757-3909-4148-969d-a0429728cdd4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/6e8b2757-3909-4148-969d-a0429728cdd4.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Landing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Landing.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Register.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ReviewResult.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ReviewResult.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/UploadPortfolio.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/UploadPortfolio.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/upskilling_platform.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/upskilling_platform.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/portfolio.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/portfolio.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/review.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/review.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/portfolio.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/portfolio.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/services/aiReview.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/aiReview.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/layout/AppLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/AppLayout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/auth.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/auth.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/user.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/user.routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JSX File" />
         <option value="JavaScript File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>
@@ -73,6 +70,11 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Pelatihan WNR4\upskilling-platform\server\src\utils" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -88,7 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1792545111048</updated>
       <workItem from="1792545113499" duration="25873000" />
-      <workItem from="1792629059162" duration="7367000" />
+      <workItem from="1792629059162" duration="15387000" />
     </task>
     <servers />
   </component>
