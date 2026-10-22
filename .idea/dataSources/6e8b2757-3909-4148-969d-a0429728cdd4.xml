@@ -1153,7 +1153,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="296" parent="1" name="upskilling_platform">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-10-21.02:11:45</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-10-22.00:38:55</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </schema>
     <user id="297" parent="1" name="abdul"/>

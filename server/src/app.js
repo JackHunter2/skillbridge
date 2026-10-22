@@ -7,6 +7,7 @@ import userRoutes from './routes/user.routes.js';
 import portfolioRoutes from './routes/portfolio.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import feedbackRoutes from './routes/feedback.routes.js';
+import roadmapRoutes from './routes/roadmap.routes.js';
 
 const app = express();
 app.set('etag', false);
@@ -29,6 +30,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/portfolios', portfolioRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/roadmap', roadmapRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);
