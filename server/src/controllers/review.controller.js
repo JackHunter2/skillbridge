@@ -23,9 +23,10 @@ async function prosesReview({ reviewId, roleName, criteria, roleSkills, text, us
             );
 
             for (const s of result.scores) {
+                const bobot = criteria.find((c) => c.criteria_id === s.criteria_id)?.weight ?? 1;
                 await conn.query(
-                    'INSERT INTO review_scores (review_id, criteria_id, score, explanation) VALUES (?, ?, ?, ?)',
-                    [reviewId, s.criteria_id, s.score, s.explanation]
+                    'INSERT INTO review_scores (review_id, criteria_id, score, explanation, weight) VALUES (?, ?, ?, ?, ?)',
+                    [reviewId, s.criteria_id, s.score, s.explanation, bobot]
                 );
             }
             for (const s of result.suggestions) {
@@ -97,7 +98,13 @@ export async function createReview(req, res) {
     if (berjalan[0]) return res.status(202).json({ review_id: berjalan[0].review_id });
 
     const [criteria] = await pool.query(
-        'SELECT criteria_id, criteria_name, description, weight FROM review_criteria'
+        `SELECT c.criteria_id, c.criteria_name, c.description,
+            COALESCE(w.weight, c.weight) AS weight
+       FROM review_criteria c
+       LEFT JOIN review_criteria_weights w
+         ON w.criteria_id = c.criteria_id
+        AND w.user_type = (SELECT user_type FROM users WHERE user_id = ?)`,
+        [req.user.id]
     );
     const [roleSkills] = await pool.query(
         `SELECT rs.skill_id, s.skill_name, rs.required_level, rs.importance
@@ -163,7 +170,7 @@ export async function getReview(req, res) {
     if (!rv[0]) return res.status(404).json({ message: 'Hasil reviu tidak ditemukan' });
 
     const [scores] = await pool.query(
-        `SELECT c.criteria_id, c.criteria_name, s.score, s.explanation
+        `SELECT c.criteria_id, c.criteria_name, s.score, s.explanation, s.weight
          FROM review_scores s JOIN review_criteria c ON c.criteria_id = s.criteria_id
          WHERE s.review_id = ? ORDER BY c.criteria_id`,
         [reviewId]

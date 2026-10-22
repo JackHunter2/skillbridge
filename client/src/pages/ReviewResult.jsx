@@ -9,6 +9,8 @@ import api from '../services/api';
 import Button from '../components/ui/Button';
 import FeedbackForm from '../components/review/FeedbackForm';
 import { scoreTone } from '../utils/score';
+import { useAuth } from '../context/AuthContext';
+import { getTeks } from '../utils/userType';
 
 const barWarna = (n) => (n >= 75 ? 'bg-emerald-500' : n >= 50 ? 'bg-amber-500' : 'bg-red-500');
 const prioritasKelas = {
@@ -50,6 +52,7 @@ const kartu = 'mt-6 rounded-2xl border border-slate-200 bg-white p-6 print:break
 
 export default function ReviewResult() {
     const { id } = useParams();
+    const { user } = useAuth();
     const [data, setData] = useState(null);
     const [error, setError] = useState('');
     const [tab, setTab] = useState('ringkasan');
@@ -110,6 +113,9 @@ export default function ReviewResult() {
     const persen = items.length ? Math.round((selesai / items.length) * 100) : 0;
     const gapAktif = gaps.filter((g) => g.gap_size > 0).length;
     const radar = scores.map((s) => ({ aspek: s.criteria_name, nilai: Number(s.score) }));
+    const adaBobot = scores.every((s) => s.weight != null);
+    const totalBobot = scores.reduce((a, s) => a + Number(s.weight || 0), 0);
+    const persenBobot = (s) => Math.round((Number(s.weight) / totalBobot) * 100);
     const riwayat = history.map((h, i) => ({ nama: `#${i + 1}`, skor: Math.round(Number(h.overall_score)) }));
     const selisih = riwayat.length > 1 ? riwayat[riwayat.length - 1].skor - riwayat[0].skor : 0;
     const saranTampil = suggestions.filter((s) => filter === 'semua' || s.priority === filter);
@@ -171,6 +177,12 @@ export default function ReviewResult() {
             <Panel aktif={tab === 'ringkasan'}>
                 <section className={kartu}>
                     <h2 className="font-bold text-navy">Profil portofolio</h2>
+                    {adaBobot && (
+                        <p className="mt-1 text-xs text-slate-500">
+                            Bobot penilaian disesuaikan untuk {getTeks(user.user_type).label.toLowerCase()}. Angka persen di
+                            samping nama aspek menunjukkan seberapa besar pengaruhnya ke skor akhir.
+                        </p>
+                    )}
                     <div className="mt-2 grid items-center gap-6 md:grid-cols-2">
                         <div className="h-72">
                             <ResponsiveContainer width="100%" height="100%">
@@ -185,8 +197,15 @@ export default function ReviewResult() {
                         <div className="space-y-5">
                             {scores.map((s) => (
                                 <div key={s.criteria_id}>
-                                    <div className="flex justify-between text-sm">
-                                        <span className="font-semibold text-slate-800">{s.criteria_name}</span>
+                                    <div className="flex items-center justify-between text-sm">
+                    <span className="font-semibold text-slate-800">
+                      {s.criteria_name}
+                        {adaBobot && (
+                            <span className="ml-2 rounded-full bg-brand-50 px-2 py-0.5 text-xs font-bold text-brand-700">
+                          {persenBobot(s)}%
+                        </span>
+                        )}
+                    </span>
                                         <span className="font-bold text-slate-700">{Math.round(s.score)}</span>
                                     </div>
                                     <div className="mt-1.5 h-2 rounded-full bg-slate-100">
