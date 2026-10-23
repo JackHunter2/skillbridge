@@ -4,7 +4,7 @@ import {
     CartesianGrid, Line, LineChart, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart,
     ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts';
-import { ArrowLeft, Check, Compass, Gauge, Lightbulb, Printer, Target } from 'lucide-react';
+import { ArrowLeft, Check, Compass, Download, Gauge, Lightbulb, Printer, Target } from 'lucide-react';
 import api from '../services/api';
 import Button from '../components/ui/Button';
 import FeedbackForm from '../components/review/FeedbackForm';
@@ -59,6 +59,7 @@ export default function ReviewResult() {
     const [filter, setFilter] = useState('semua');
     const [items, setItems] = useState([]);
     const [history, setHistory] = useState([]);
+    const [unduh, setUnduh] = useState(false);
 
     useEffect(() => {
         api.get(`/reviews/${id}`)
@@ -84,6 +85,25 @@ export default function ReviewResult() {
             await api.patch(`/roadmap/items/${it.item_id}`, { status: berikut });
         } catch {
             ubah(it.status);
+        }
+    };
+    const unduhPdf = async () => {
+        setUnduh(true);
+        try {
+            const res = await api.get(`/reviews/${id}/pdf`, { responseType: 'blob' });
+            const url = URL.createObjectURL(res.data);
+            const a = document.createElement('a');
+            const nama = (data?.review.title || 'portofolio').replace(/[^\w-]+/g, '-');
+            a.href = url;
+            a.download = `Reviu-${nama}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        } catch {
+            alert('Gagal mengunduh PDF, coba lagi');
+        } finally {
+            setUnduh(false);
         }
     };
 
@@ -130,8 +150,8 @@ export default function ReviewResult() {
                 <Link to="/dashboard" className="inline-flex items-center gap-1 text-sm font-semibold text-brand-600">
                     <ArrowLeft className="h-4 w-4" /> Dashboard
                 </Link>
-                <Button variant="secondary" size="sm" onClick={() => window.print()}>
-                    <Printer className="h-4 w-4" /> Cetak / simpan PDF
+                <Button variant="secondary" size="sm" onClick={unduhPdf} loading={unduh}>
+                    {!unduh && <Download className="h-4 w-4" />} Unduh laporan PDF
                 </Button>
             </div>
 

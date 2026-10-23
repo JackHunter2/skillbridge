@@ -1,5 +1,6 @@
 import { pool } from '../config/db.js';
 import { generateReview } from '../services/aiReview.service.js';
+import { buatLaporanPdf } from '../services/reviewPdf.service.js';
 
 async function prosesReview({ reviewId, roleName, criteria, roleSkills, text, userId, userType }) {
     try {
@@ -154,20 +155,18 @@ export async function getReviewStatus(req, res) {
     });
 }
 
-export async function getReview(req, res) {
-    const reviewId = Number(req.params.id);
-    if (!Number.isInteger(reviewId)) return res.status(400).json({ message: 'ID tidak valid' });
-
+export async function ambilHasilReview(reviewId, userId) {
     const [rv] = await pool.query(
         `SELECT r.review_id, r.overall_score, r.summary, r.model_name, r.created_at,
-                p.portfolio_id, p.title, tr.role_name
-         FROM ai_reviews r
-                  JOIN portfolios p ON p.portfolio_id = r.portfolio_id
-                  JOIN target_roles tr ON tr.role_id = p.role_id
-         WHERE r.review_id = ? AND p.user_id = ? AND r.status = 'done'`,
-        [reviewId, req.user.id]
+            p.portfolio_id, p.title, tr.role_name, u.full_name, u.user_type
+       FROM ai_reviews r
+       JOIN portfolios p ON p.portfolio_id = r.portfolio_id
+       JOIN target_roles tr ON tr.role_id = p.role_id
+       JOIN users u ON u.user_id = p.user_id
+      WHERE r.review_id = ? AND p.user_id = ? AND r.status = 'done'`,
+        [reviewId, userId]
     );
-    if (!rv[0]) return res.status(404).json({ message: 'Hasil reviu tidak ditemukan' });
+    if (!rv[0]) return null;
 
     const [scores] = await pool.query(
         `SELECT c.criteria_id, c.criteria_name, s.score, s.explanation, s.weight
@@ -199,5 +198,29 @@ export async function getReview(req, res) {
         [reviewId]
     );
 
-    res.json({ review: rv[0], scores, suggestions, gaps, roadmap });
+    return { review: rv[0], scores, suggestions, gaps, roadmap };
+}
+
+export async function getReview(req, res) {
+    const reviewId = Number(req.params.id);
+    if (!Number.isInteger(reviewId)) return res.status(400).json({ message: 'ID tidak valid' });
+
+    const data = await ambilHasilReview(reviewId, req.user.id);
+    if (!data) return res.status(404).json({ message: 'Hasil reviu tidak ditemukan' });
+    res.json(data);
+}
+
+export async function downloadPdf(req, res) {
+    const reviewId = Number(req.params.id);
+    if (!Number.isInteger(reviewId)) return res.status(400).json({ message: 'ID tidak valid' });
+
+    const data = await ambilHasilReview(reviewId, req.user.id);
+    if (!data) return res.status(404).json({ message: 'Hasil reviu tidak ditemukan' });
+
+    const nama = String(data.review.title).replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 40) || 'portofolio';
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="Reviu-${nama}.pdf"`);
+
+    const doc = buatLaporanPdf(data);
+    doc.pipe(res);
 }
