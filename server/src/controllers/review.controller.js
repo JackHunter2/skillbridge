@@ -88,6 +88,11 @@ export async function createReview(req, res) {
     );
     const [usr] = await pool.query('SELECT user_type FROM users WHERE user_id = ?', [req.user.id]);
     if (!pf[0]) return res.status(404).json({ message: 'Portofolio tidak ditemukan' });
+    if (!pf[0].extracted_text) {
+        return res.status(410).json({
+            message: 'Teks portofolio ini sudah dihapus karena tidak aktif. Unggah ulang portofolio untuk mereviunya lagi.',
+        });
+    }
 
     // Jika masih ada reviu yang berjalan (< 5 menit), pakai itu agar tidak dobel
     const [berjalan] = await pool.query(

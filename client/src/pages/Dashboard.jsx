@@ -169,6 +169,16 @@ export default function Dashboard() {
                                                 {p.source_type === 'file' ? 'File PDF' : 'Link'} •{' '}
                                                 {new Date(p.uploaded_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                                             </p>
+                                            {p.purged ? (
+                                                <p className="mt-0.5 text-xs font-medium text-amber-700">
+                                                    Teks dihapus karena tidak aktif. Hasil reviu tetap tersimpan.
+                                                </p>
+                                            ) : p.expires_at ? (
+                                                <p className="mt-0.5 text-xs text-slate-400">
+                                                    Teks disimpan hingga{' '}
+                                                    {new Date(p.expires_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                </p>
+                                            ) : null}
                                         </div>
                                     </div>
 
@@ -183,7 +193,8 @@ export default function Dashboard() {
                                                 Lihat hasil
                                             </Button>
                                         )}
-                                        <Button size="sm" onClick={() => jalankanReviu(p)} disabled={busyId !== null}>
+                                        <Button size="sm" onClick={() => jalankanReviu(p)} disabled={busyId !== null || Boolean(p.purged)}
+                                                title={p.purged ? 'Teks sudah dihapus. Unggah ulang untuk mereviu lagi.' : undefined}>
                                             <Sparkles className="h-4 w-4" />
                                             {p.latest_review_id ? 'Reviu ulang' : 'Reviu AI'}
                                         </Button>

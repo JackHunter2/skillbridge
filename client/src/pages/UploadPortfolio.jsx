@@ -146,7 +146,14 @@ export default function UploadPortfolio() {
                         </div>
                     </>
                 )}
-
+                <div className="flex items-start gap-2 rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-600">
+                    <Info className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
+                    <p>
+                        <strong>Privasi data:</strong> file PDF langsung dihapus dari server setelah teksnya dibaca. Teks
+                        portofolio dihapus otomatis setelah 180 hari tanpa aktivitas, dan Anda bisa menghapusnya kapan saja
+                        dari Dashboard. Hasil reviu tetap tersimpan.
+                    </p>
+                </div>
                 <div className="flex items-center gap-3 pt-1">
                     <Button loading={busy}>Unggah</Button>
                     <Button as={Link} to="/dashboard" variant="ghost">Batal</Button>

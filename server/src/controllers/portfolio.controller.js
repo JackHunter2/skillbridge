@@ -61,7 +61,8 @@ export async function createPortfolio(req, res) {
      VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [req.user.id, role_id, title, source_type, file_path, external_url, text]
     );
-
+    // PDF tidak diperlukan lagi setelah teksnya diekstrak, jadi langsung dihapus dari server
+    if (req.file) await fs.unlink(req.file.path).catch(() => {});
     res.status(201).json({
         portfolio: { portfolio_id: hasil.insertId, title, source_type, text_length: text.length },
     });
@@ -71,6 +72,12 @@ export async function listPortfolios(req, res) {
     const [rows] = await pool.query(
         `SELECT p.portfolio_id, p.title, p.source_type, p.external_url, p.version_no, p.uploaded_at,
                 CHAR_LENGTH(p.extracted_text) AS text_length,
+                (p.text_purged_at IS NOT NULL) AS purged,
+                DATE_ADD(
+                        GREATEST(p.uploaded_at, COALESCE(
+                                (SELECT MAX(r0.created_at) FROM ai_reviews r0 WHERE r0.portfolio_id = p.portfolio_id),
+                                p.uploaded_at)),
+                        INTERVAL 180 DAY) AS expires_at,
                 (SELECT r.review_id FROM ai_reviews r
                  WHERE r.portfolio_id = p.portfolio_id AND r.status = 'done'
                  ORDER BY r.created_at DESC LIMIT 1) AS latest_review_id,
