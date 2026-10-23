@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { FileText, FolderOpen, Info, Link2, Plus, Sparkles, Target, TrendingUp } from 'lucide-react';
+import { FileText, FolderOpen, Info, Link2, Plus, Sparkles, Target, Trash2, TrendingUp } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
 import ReviewingOverlay from '../components/review/ReviewingOverlay';
+import ConfirmDialog from '../components/ui/ConfirmDialog';
 import { scoreTone } from '../utils/score';
 import { getTeks } from '../utils/userType';
 
@@ -16,6 +17,8 @@ export default function Dashboard() {
     const [loadingList, setLoadingList] = useState(true);
     const [busyId, setBusyId] = useState(null);
     const [error, setError] = useState('');
+    const [hapusTarget, setHapusTarget] = useState(null);
+    const [hapusBusy, setHapusBusy] = useState(false);
 
     useEffect(() => {
         if (!user.target_role_id) return;
@@ -54,6 +57,20 @@ export default function Dashboard() {
         }
     };
 
+    const hapusPortofolio = async () => {
+        setHapusBusy(true);
+        setError('');
+        try {
+            await api.delete(`/portfolios/${hapusTarget.portfolio_id}`);
+            setPortfolios((list) => list.filter((x) => x.portfolio_id !== hapusTarget.portfolio_id));
+        } catch (err) {
+            setError(err.response?.data?.message || 'Gagal menghapus portofolio');
+        } finally {
+            setHapusBusy(false);
+            setHapusTarget(null);
+        }
+    };
+
     const terbaru = portfolios.find((p) => p.latest_score != null);
     const nadaTerbaru = terbaru ? scoreTone(Number(terbaru.latest_score)) : null;
     const namaDepan = user.full_name.split(' ')[0];
@@ -65,6 +82,18 @@ export default function Dashboard() {
     return (
         <div className="fade-up">
             {busyId && <ReviewingOverlay />}
+
+            {hapusTarget && (
+                <ConfirmDialog
+                    title="Hapus portofolio ini?"
+                    loading={hapusBusy}
+                    onConfirm={hapusPortofolio}
+                    onCancel={() => !hapusBusy && setHapusTarget(null)}
+                >
+                    Portofolio <strong>{hapusTarget.title}</strong> beserta semua hasil reviu, skill gap, dan
+                    roadmap-nya akan dihapus permanen. File PDF di server juga ikut dihapus. Tindakan ini tidak bisa dibatalkan.
+                </ConfirmDialog>
+            )}
 
             <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
@@ -158,6 +187,14 @@ export default function Dashboard() {
                                             <Sparkles className="h-4 w-4" />
                                             {p.latest_review_id ? 'Reviu ulang' : 'Reviu AI'}
                                         </Button>
+                                        <button
+                                            onClick={() => setHapusTarget(p)}
+                                            disabled={busyId !== null}
+                                            title="Hapus portofolio"
+                                            className="rounded-lg p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </button>
                                     </div>
                                 </li>
                             );

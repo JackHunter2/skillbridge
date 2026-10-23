@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import pdf from 'pdf-parse/lib/pdf-parse.js'
 import { pool } from '../config/db.js';
+import path from 'path';
 
 const MIN_TEXT = 100;
 const MAX_TEXT = 30000;
@@ -94,4 +95,47 @@ export async function reviewHistory(req, res) {
         [req.user.id]
     );
     res.json({ history: rows.reverse() });
+}
+
+export async function deletePortfolio(req, res) {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ message: 'ID tidak valid' });
+
+    const [pf] = await pool.query(
+        'SELECT portfolio_id, file_path FROM portfolios WHERE portfolio_id = ? AND user_id = ?',
+        [id, req.user.id]
+    );
+    if (!pf[0]) return res.status(404).json({ message: 'Portofolio tidak ditemukan' });
+
+    const [jalan] = await pool.query(
+        `SELECT review_id FROM ai_reviews
+      WHERE portfolio_id = ? AND status = 'processing' AND created_at > (NOW() - INTERVAL 5 MINUTE) LIMIT 1`,
+        [id]
+    );
+    if (jalan[0]) {
+        return res.status(409).json({ message: 'Portofolio sedang direviu. Tunggu hingga selesai, lalu coba lagi.' });
+    }
+
+    const conn = await pool.getConnection();
+    try {
+        await conn.beginTransaction();
+        // roadmap menunjuk ke reviu dengan SET NULL, jadi dihapus manual agar tidak jadi data yatim
+        await conn.query(
+            `DELETE FROM roadmaps WHERE user_id = ?
+         AND review_id IN (SELECT review_id FROM ai_reviews WHERE portfolio_id = ?)`,
+            [req.user.id, id]
+        );
+        await conn.query('DELETE FROM portfolios WHERE portfolio_id = ? AND user_id = ?', [id, req.user.id]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        throw err;
+    } finally {
+        conn.release();
+    }
+
+    if (pf[0].file_path) {
+        await fs.unlink(path.join(path.resolve('uploads'), path.basename(pf[0].file_path))).catch(() => {});
+    }
+    res.json({ message: 'Portofolio dihapus' });
 }

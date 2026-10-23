@@ -40,7 +40,7 @@ export async function register(req, res) {
         [full_name, email, password_hash, user_type]
     );
 
-    const user = { user_id: hasil.insertId, full_name, email, user_type, target_role_id: null };
+    const user = { user_id: hasil.insertId, full_name, email, user_type, target_role_id: null, avatar_path: null };
     res.status(201).json({ token: buatToken(user), user });
 }
 
@@ -62,14 +62,14 @@ export async function login(req, res) {
         full_name: u.full_name,
         email: u.email,
         user_type: u.user_type,
-        target_role_id: u.target_role_id,
+        avatar_path: u.avatar_path,
     };
     res.json({ token: buatToken(user), user });
 }
 
 export async function me(req, res) {
     const [rows] = await pool.query(
-        'SELECT user_id, full_name, email, user_type, target_role_id FROM users WHERE user_id = ?',
+        'SELECT user_id, full_name, email, user_type, target_role_id, avatar_path FROM users WHERE user_id = ?',
         [req.user.id]
     );
     if (rows.length === 0) return res.status(404).json({ message: 'Pengguna tidak ditemukan' });

@@ -30,7 +30,7 @@ export async function setTargetRole(req, res) {
     await pool.query('UPDATE users SET target_role_id = ? WHERE user_id = ?', [role_id, req.user.id]);
 
     const [rows] = await pool.query(
-        'SELECT user_id, full_name, email, user_type, target_role_id FROM users WHERE user_id = ?',
+        'SELECT user_id, full_name, email, user_type, target_role_id, avatar_path FROM users WHERE user_id = ?',
         [req.user.id]
     );
     res.json({ user: rows[0] });

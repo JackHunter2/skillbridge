@@ -2186,55 +2186,59 @@ tested_feature</ColNames>
       <Position>9</Position>
       <StoredType>int unsigned|0s</StoredType>
     </column>
-    <column id="506" parent="321" name="is_active">
+    <column id="506" parent="321" name="avatar_path">
+      <Position>10</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="507" parent="321" name="is_active">
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>10</Position>
+      <Position>11</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <column id="507" parent="321" name="created_at">
+    <column id="508" parent="321" name="created_at">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>11</Position>
-      <StoredType>timestamp|0s</StoredType>
-    </column>
-    <column id="508" parent="321" name="updated_at">
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
       <Position>12</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <foreign-key id="509" parent="321" name="fk_user_role">
+    <column id="509" parent="321" name="updated_at">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+      <Position>13</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <foreign-key id="510" parent="321" name="fk_user_role">
       <ColNames>target_role_id</ColNames>
       <OnDelete>set-null</OnDelete>
       <RefColNames>role_id</RefColNames>
       <RefTableName>target_roles</RefTableName>
     </foreign-key>
-    <index id="510" parent="321" name="PRIMARY">
+    <index id="511" parent="321" name="PRIMARY">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="511" parent="321" name="uq_user_email">
+    <index id="512" parent="321" name="uq_user_email">
       <ColNames>email</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="512" parent="321" name="idx_user_type">
+    <index id="513" parent="321" name="idx_user_type">
       <ColNames>user_type</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="513" parent="321" name="fk_user_role">
+    <index id="514" parent="321" name="fk_user_role">
       <ColNames>target_role_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="514" parent="321" name="PRIMARY">
+    <key id="515" parent="321" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="515" parent="321" name="uq_user_email">
+    <key id="516" parent="321" name="uq_user_email">
       <UnderlyingIndexName>uq_user_email</UnderlyingIndexName>
     </key>
   </database-model>

@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 
 export default function App() {
     return (
@@ -30,6 +31,7 @@ export default function App() {
                     <Route path="/reviews/:id" element={<ReviewResult />} />
                     <Route path="*" element={<NotFound />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/settings" element={<Settings />} />
                 </Route>
             </Route>
 

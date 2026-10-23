@@ -8,12 +8,19 @@ import portfolioRoutes from './routes/portfolio.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import feedbackRoutes from './routes/feedback.routes.js';
 import roadmapRoutes from './routes/roadmap.routes.js';
+import path from 'path';
 
 const app = express();
 app.set('etag', false);
 
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
 app.use(express.json());
+// Hanya folder avatars yang dibuka. File PDF portofolio TIDAK pernah disajikan ke publik.
+app.use('/api/avatars', express.static(path.resolve('uploads', 'avatars'), {
+    maxAge: '7d',
+    index: false,
+    setHeaders: (res) => res.setHeader('X-Content-Type-Options', 'nosniff'),
+}));
 
 app.get('/api/health', async (req, res) => {
     try {
