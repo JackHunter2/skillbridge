@@ -33,4 +33,7 @@ const teks = {
     },
 };
 
-export const getTeks = (tipe) => teks[tipe] || teks.fresh_graduate;
+export const getTeks = (tipe) =>
+    tipe === 'admin'
+        ? { ...teks.fresh_graduate, label: 'Admin' }
+        : teks[tipe] || teks.fresh_graduate;

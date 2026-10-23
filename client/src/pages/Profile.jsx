@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, CheckCircle2, Info, Trash2 } from 'lucide-react';
+import { Camera, CalendarDays, CheckCircle2, FolderOpen, Info, ListChecks, Trash2, TrendingUp, Trophy } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Avatar from '../components/ui/Avatar';
@@ -53,6 +53,13 @@ function Pesan({ pesan }) {
 export default function Profile() {
     const { user, updateUser } = useAuth();
     const inputFile = useRef(null);
+    const [ringkas, setRingkas] = useState(null);
+
+    useEffect(() => {
+        api.get('/users/me/summary')
+            .then((res) => setRingkas(res.data))
+            .catch(() => {});
+    }, []);
     const [profil, setProfil] = useState({ full_name: user.full_name, user_type: user.user_type });
     const [pesanFoto, setPesanFoto] = useState({ tipe: '', teks: '' });
     const [pesanProfil, setPesanProfil] = useState({ tipe: '', teks: '' });
@@ -106,8 +113,8 @@ export default function Profile() {
         setPesanProfil({ tipe: '', teks: '' });
         setBusyProfil(true);
         try {
-            const res = await api.put('/users/me', profil);
-            updateUser(res.data.user);
+            const body = user.user_type === 'admin' ? { full_name: profil.full_name } : profil;
+            const res = await api.put('/users/me', body);
             setPesanProfil({ tipe: 'ok', teks: 'Profil berhasil diperbarui' });
         } catch (err) {
             setPesanProfil({ tipe: 'err', teks: err.response?.data?.message || 'Gagal menyimpan profil' });
@@ -122,6 +129,51 @@ export default function Profile() {
         <div className="fade-up mx-auto max-w-xl">
             <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">Profil</h1>
             <p className="mt-2 text-slate-500">Atur foto dan data diri Anda.</p>
+            {ringkas && (
+                <section className="mt-8 overflow-hidden rounded-2xl bg-navy p-6 text-white">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Peran target</p>
+                            <p className="text-lg font-extrabold">{ringkas.peran || 'Belum dipilih'}</p>
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">
+              <CalendarDays className="h-3.5 w-3.5" />
+              Bergabung {new Date(ringkas.bergabung).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
+            </span>
+                    </div>
+
+                    <div className="mt-5 grid grid-cols-2 gap-3">
+                        <div className="rounded-xl bg-white/5 p-4">
+                            <FolderOpen className="h-4 w-4 text-slate-400" />
+                            <p className="mt-2 text-2xl font-extrabold">{ringkas.portofolio}</p>
+                            <p className="text-xs text-slate-400">Portofolio</p>
+                        </div>
+                        <div className="rounded-xl bg-white/5 p-4">
+                            <Trophy className="h-4 w-4 text-slate-400" />
+                            <p className="mt-2 text-2xl font-extrabold">
+                                {ringkas.skor_terbaik != null ? Math.round(ringkas.skor_terbaik) : '-'}
+                            </p>
+                            <p className="text-xs text-slate-400">Skor terbaik ({ringkas.reviu} reviu)</p>
+                        </div>
+                        <div className="rounded-xl bg-white/5 p-4">
+                            <TrendingUp className="h-4 w-4 text-slate-400" />
+                            <p className="mt-2 text-2xl font-extrabold">
+                                {ringkas.reviu > 1
+                                    ? `${ringkas.skor_terbaru - ringkas.skor_pertama >= 0 ? '+' : ''}${Math.round(ringkas.skor_terbaru - ringkas.skor_pertama)}`
+                                    : '-'}
+                            </p>
+                            <p className="text-xs text-slate-400">Perubahan skor sejak reviu pertama</p>
+                        </div>
+                        <div className="rounded-xl bg-white/5 p-4">
+                            <ListChecks className="h-4 w-4 text-slate-400" />
+                            <p className="mt-2 text-2xl font-extrabold">
+                                {ringkas.roadmap_total > 0 ? `${ringkas.roadmap_selesai}/${ringkas.roadmap_total}` : '-'}
+                            </p>
+                            <p className="text-xs text-slate-400">Langkah roadmap terbaru selesai</p>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             <section className={`${kartu} mt-8`}>
                 <h2 className="font-bold text-navy">Foto profil</h2>
@@ -157,6 +209,7 @@ export default function Profile() {
                     <label className={labelCls}>Email</label>
                     <input value={user.email} disabled className={`${inputCls} cursor-not-allowed bg-slate-50 text-slate-500`} />
                 </div>
+                {user.user_type !== 'admin' && (
                 <div>
                     <label className={labelCls}>Saya adalah</label>
                     <div className="mt-1.5 grid grid-cols-2 gap-2">
@@ -173,6 +226,7 @@ export default function Profile() {
                     </div>
                     <p className="mt-2 text-xs text-slate-500">{getTeks(profil.user_type).deskripsiDaftar}</p>
                 </div>
+                    )}
                 <div className="flex items-center justify-between gap-3">
                     <Button loading={busyProfil}>Simpan perubahan</Button>
                     <Link to="/onboarding" className="text-sm font-semibold text-brand-600">Ganti peran target</Link>

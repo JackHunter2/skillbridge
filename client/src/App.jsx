@@ -13,6 +13,8 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import AdminRoute from './components/layout/AdminRoute';
+import Admin from './pages/Admin';
 
 export default function App() {
     return (
@@ -32,6 +34,9 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route element={<AdminRoute />}>
+                        <Route path="/admin" element={<Admin />} />
+                    </Route>
                 </Route>
             </Route>
 

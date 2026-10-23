@@ -210,7 +210,7 @@ export default function ReviewResult() {
                                     <PolarGrid stroke="#e2e8f0" />
                                     <PolarAngleAxis dataKey="aspek" tick={{ fill: '#334155', fontSize: 12 }} />
                                     <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
-                                    <Radar dataKey="nilai" stroke="#1e6fd9" fill="#1e6fd9" fillOpacity={0.3} />
+                                    <Radar dataKey="nilai" stroke="var(--color-brand-600)" fill="var(--color-brand-600)" fillOpacity={0.3} />
                                 </RadarChart>
                             </ResponsiveContainer>
                         </div>
@@ -258,7 +258,7 @@ export default function ReviewResult() {
                                     <XAxis dataKey="nama" tick={{ fontSize: 12, fill: '#64748b' }} />
                                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#64748b' }} />
                                     <Tooltip formatter={(v) => [`${v}`, 'Skor']} />
-                                    <Line type="monotone" dataKey="skor" stroke="#1e6fd9" strokeWidth={3} dot={{ r: 4 }} />
+                                    <Line type="monotone" dataKey="skor" stroke="var(--color-brand-600)" strokeWidth={3} dot={{ r: 4 }} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>

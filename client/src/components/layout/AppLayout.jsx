@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { ChevronDown, LayoutDashboard, LogOut, Repeat, Settings, Upload, User } from 'lucide-react';
+import { ChevronDown, LayoutDashboard, LogOut, Repeat, Settings, Shield, Upload, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { getTeks } from '../../utils/userType';
 import Avatar from '../ui/Avatar';
@@ -55,6 +55,11 @@ export default function AppLayout() {
                             <NavLink to="/upload" className={link}>
                                 <Upload className="h-4 w-4" /> Upload
                             </NavLink>
+                            {user.user_type === 'admin' && (
+                                <NavLink to="/admin" className={link}>
+                                    <Shield className="h-4 w-4" /> Admin
+                                </NavLink>
+                            )}
                         </nav>
                     </div>
 
@@ -91,6 +96,11 @@ export default function AppLayout() {
                                     <Link to="/upload" onClick={tutup} className={item}>
                                         <Upload className="h-4 w-4 text-slate-400" /> Upload portofolio
                                     </Link>
+                                    {user.user_type === 'admin' && (
+                                        <Link to="/admin" onClick={tutup} className={item}>
+                                            <Shield className="h-4 w-4 text-slate-400" /> Panel admin
+                                        </Link>
+                                    )}
                                     <div className="my-1 h-px bg-slate-100" />
                                 </div>
 

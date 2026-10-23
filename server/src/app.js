@@ -8,6 +8,7 @@ import portfolioRoutes from './routes/portfolio.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import feedbackRoutes from './routes/feedback.routes.js';
 import roadmapRoutes from './routes/roadmap.routes.js';
+import adminRoutes from './routes/admin.routes.js';
 import path from 'path';
 
 const app = express();
@@ -38,6 +39,7 @@ app.use('/api/portfolios', portfolioRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/roadmap', roadmapRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err);

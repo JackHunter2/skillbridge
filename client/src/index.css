@@ -28,3 +28,33 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .fade-up { animation: none; }
 }
+
+/* Pilihan warna aksen: menimpa variabel warna brand dari @theme */
+html[data-accent="toska"] {
+    --color-brand-50: #e6f7f5;
+    --color-brand-100: #c3ece6;
+    --color-brand-500: #14b8a6;
+    --color-brand-600: #0d9488;
+    --color-brand-700: #0f766e;
+}
+html[data-accent="ungu"] {
+    --color-brand-50: #f1edff;
+    --color-brand-100: #e0d7ff;
+    --color-brand-500: #8b5cf6;
+    --color-brand-600: #7c3aed;
+    --color-brand-700: #6d28d9;
+}
+html[data-accent="oranye"] {
+    --color-brand-50: #fff4e5;
+    --color-brand-100: #ffe2bd;
+    --color-brand-500: #f97316;
+    --color-brand-600: #d9480f;
+    --color-brand-700: #b53a0a;
+}
+html[data-accent="mawar"] {
+    --color-brand-50: #fff1f2;
+    --color-brand-100: #ffe0e4;
+    --color-brand-500: #f43f5e;
+    --color-brand-600: #e11d48;
+    --color-brand-700: #be123c;
+}

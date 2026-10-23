@@ -1,4 +1,10 @@
 node_modules/
 .env
+.env.*
+!.env.example
 server/uploads/
 client/dist/
+database/backup*.sql
+*.log
+.DS_Store
+.idea/

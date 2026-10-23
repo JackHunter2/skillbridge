@@ -10,7 +10,7 @@ const KOLOM_USER = 'user_id, full_name, email, user_type, target_role_id, avatar
 
 const profilSchema = z.object({
     full_name: z.string().trim().min(2, 'Nama minimal 2 karakter').max(120),
-    user_type: z.enum(['fresh_graduate', 'anak_magang']),
+    user_type: z.enum(['fresh_graduate', 'anak_magang']).optional(),
 });
 
 const passwordSchema = z.object({
@@ -39,10 +39,10 @@ export async function updateProfile(req, res) {
 
     await pool.query(
         `UPDATE users
-        SET full_name = ?,
-            user_type = IF(user_type IN ('fresh_graduate', 'anak_magang'), ?, user_type)
-      WHERE user_id = ?`,
-        [full_name, user_type, req.user.id]
+         SET full_name = ?,
+             user_type = IF(user_type IN ('fresh_graduate', 'anak_magang'), COALESCE(?, user_type), user_type)
+         WHERE user_id = ?`,
+        [full_name, user_type ?? null, req.user.id]
     );
     res.json({ user: await ambilUser(req.user.id) });
 }
@@ -117,4 +117,50 @@ export async function hapusAkun(req, res) {
     if (rows[0].avatar_path) await hapusFile(path.join(AVATAR_DIR, path.basename(rows[0].avatar_path)));
 
     res.json({ message: 'Akun berhasil dihapus' });
+}
+
+export async function ringkasanProfil(req, res) {
+    const id = req.user.id;
+
+    const [info] = await pool.query(
+        `SELECT u.created_at, tr.role_name
+       FROM users u LEFT JOIN target_roles tr ON tr.role_id = u.target_role_id
+      WHERE u.user_id = ?`,
+        [id]
+    );
+    const [pf] = await pool.query('SELECT COUNT(*) AS n FROM portfolios WHERE user_id = ?', [id]);
+    const [rv] = await pool.query(
+        `SELECT COUNT(*) AS n, MAX(r.overall_score) AS terbaik
+       FROM ai_reviews r JOIN portfolios p ON p.portfolio_id = r.portfolio_id
+      WHERE p.user_id = ? AND r.status = 'done'`,
+        [id]
+    );
+    const urut = (arah) =>
+        pool.query(
+            `SELECT r.overall_score AS skor
+         FROM ai_reviews r JOIN portfolios p ON p.portfolio_id = r.portfolio_id
+        WHERE p.user_id = ? AND r.status = 'done'
+        ORDER BY r.created_at ${arah}, r.review_id ${arah} LIMIT 1`,
+            [id]
+        );
+    const [pertama] = await urut('ASC');
+    const [terbaru] = await urut('DESC');
+    const [rm] = await pool.query(
+        `SELECT COUNT(*) AS total, COALESCE(SUM(i.status = 'selesai'), 0) AS selesai
+       FROM roadmap_items i JOIN roadmaps r ON r.roadmap_id = i.roadmap_id
+      WHERE r.roadmap_id = (SELECT roadmap_id FROM roadmaps WHERE user_id = ? ORDER BY created_at DESC, roadmap_id DESC LIMIT 1)`,
+        [id]
+    );
+
+    res.json({
+        bergabung: info[0]?.created_at,
+        peran: info[0]?.role_name || null,
+        portofolio: Number(pf[0].n),
+        reviu: Number(rv[0].n),
+        skor_terbaik: rv[0].terbaik != null ? Number(rv[0].terbaik) : null,
+        skor_pertama: pertama[0] ? Number(pertama[0].skor) : null,
+        skor_terbaru: terbaru[0] ? Number(terbaru[0].skor) : null,
+        roadmap_total: Number(rm[0].total),
+        roadmap_selesai: Number(rm[0].selesai),
+    });
 }

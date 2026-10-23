@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, Info, Trash2 } from 'lucide-react';
+import { Check, CheckCircle2, Info, Trash2 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/ui/Button';
 import ConfirmDialog from '../components/ui/ConfirmDialog';
 import { inputCls, labelCls } from '../components/ui/styles';
+import { ACCENTS, getAccent, setAccent } from '../utils/theme';
 
 function Pesan({ pesan }) {
     if (!pesan.teks) return null;
@@ -21,6 +22,7 @@ function Pesan({ pesan }) {
 export default function Settings() {
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const [aksen, setAksen] = useState(getAccent());
     const [pw, setPw] = useState({ current_password: '', new_password: '', konfirmasi: '' });
     const [pesanPw, setPesanPw] = useState({ tipe: '', teks: '' });
     const [busyPw, setBusyPw] = useState(false);
@@ -77,6 +79,31 @@ export default function Settings() {
         <div className="fade-up mx-auto max-w-xl">
             <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">Pengaturan</h1>
             <p className="mt-2 text-slate-500">Keamanan dan pengelolaan akun Anda.</p>
+            <section className={`${kartu} mt-8`}>
+                <h2 className="font-bold text-navy">Tampilan</h2>
+                <p className="mt-1 text-sm text-slate-500">Pilih warna aksen aplikasi. Pilihan tersimpan di browser ini.</p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                    {ACCENTS.map((a) => {
+                        const aktif = aksen === a.key;
+                        return (
+                            <button
+                                key={a.key}
+                                type="button"
+                                onClick={() => { setAccent(a.key); setAksen(a.key); }}
+                                aria-pressed={aktif}
+                                className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 text-sm font-semibold transition ${
+                                    aktif ? 'border-brand-600 bg-brand-50 text-brand-700' : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                                }`}
+                            >
+                <span className="flex h-5 w-5 items-center justify-center rounded-full text-white" style={{ background: a.warna }}>
+                  {aktif && <Check className="h-3 w-3" />}
+                </span>
+                                {a.label}
+                            </button>
+                        );
+                    })}
+                </div>
+            </section>
 
             <form onSubmit={simpanPassword} className={`${kartu} mt-8 space-y-4`}>
                 <h2 className="font-bold text-navy">Ganti password</h2>
