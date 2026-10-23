@@ -110,6 +110,9 @@ export async function hapusAkun(req, res) {
     // Semua data terkait (portofolio, reviu, roadmap, feedback) ikut terhapus lewat FK CASCADE
     await pool.query('DELETE FROM users WHERE user_id = ?', [req.user.id]);
 
+    // Peran buatan sendiri milik akun ini kini yatim (created_by menjadi NULL), jadi dibersihkan
+    await pool.query('DELETE FROM target_roles WHERE is_custom = 1 AND created_by IS NULL').catch(() => {});
+
     for (const b of berkas) await hapusFile(path.join(UPLOAD_DIR, path.basename(b.file_path)));
     if (rows[0].avatar_path) await hapusFile(path.join(AVATAR_DIR, path.basename(rows[0].avatar_path)));
 

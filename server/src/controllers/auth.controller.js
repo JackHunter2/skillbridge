@@ -63,6 +63,7 @@ export async function login(req, res) {
         email: u.email,
         user_type: u.user_type,
         avatar_path: u.avatar_path,
+        target_role_id: u.target_role_id,
     };
     res.json({ token: buatToken(user), user });
 }

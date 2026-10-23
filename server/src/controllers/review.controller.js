@@ -107,12 +107,19 @@ export async function createReview(req, res) {
         AND w.user_type = (SELECT user_type FROM users WHERE user_id = ?)`,
         [req.user.id]
     );
-    const [roleSkills] = await pool.query(
-        `SELECT rs.skill_id, s.skill_name, rs.required_level, rs.importance
-         FROM role_skills rs JOIN skills s ON s.skill_id = rs.skill_id
-         WHERE rs.role_id = ?`,
-        [pf[0].role_id]
-    );
+    const kueriSkill = `SELECT rs.skill_id, s.skill_name, rs.required_level, rs.importance
+       FROM role_skills rs JOIN skills s ON s.skill_id = rs.skill_id
+      WHERE rs.role_id = ?`;
+    let [roleSkills] = await pool.query(kueriSkill, [pf[0].role_id]);
+
+    if (roleSkills.length === 0) {
+        // Peran buatan sendiri belum punya daftar skill, jadi dipakai skill umum lintas bidang
+        const [umum] = await pool.query("SELECT role_id FROM target_roles WHERE role_name = 'Umum / Lintas Bidang'");
+        if (umum[0]) [roleSkills] = await pool.query(kueriSkill, [umum[0].role_id]);
+    }
+    if (roleSkills.length === 0) {
+        return res.status(400).json({ message: 'Peran ini belum punya data skill. Hubungi admin.' });
+    }
     if (roleSkills.length === 0) {
         return res.status(400).json({ message: 'Peran ini belum punya data skill. Hubungi admin.' });
     }
