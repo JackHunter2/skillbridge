@@ -7,20 +7,20 @@ import { APP_NAME } from '../config';
 
 const masalah = [
     ['Bingung skill apa yang dicari industri', 'Banyak kursus tersedia, tapi tidak jelas mana yang benar-benar dibutuhkan.'],
-    ['Portofolio tidak pernah dinilai', 'Tanpa reviu, sulit tahu kualitas dan kekurangannya sebelum melamar.'],
+    ['Portofolio tidak pernah dinilai', 'Tanpa review, sulit tahu kualitas dan kekurangannya sebelum melamar.'],
     ['Mentor terbatas dan mahal', 'Akses ke reviewer sering bergantung koneksi atau biaya.'],
 ];
 
 const langkah = [
-    ['Pilih peran target', 'Data Analyst, UI/UX, Digital Marketing, atau Web Developer.'],
-    ['Unggah portofolio', 'Cukup file PDF atau tempel isi portofolio dari link Anda.'],
+    ['Pilih posisi yang diinginkan', 'Data Analyst, UI/UX, Digital Marketing, atau Web Developer.'],
+    ['Unggah portofolio', 'Cukup file PDF atau tempel isi portofolio dari link kamu.'],
     ['Terima hasilnya', 'Skor, saran perbaikan, skill gap, dan roadmap belajar.'],
 ];
 
 const fitur = [
     [Gauge, 'Skor per aspek', 'Kejelasan, bukti dampak, relevansi, dan tampilan dinilai terpisah.'],
     [ClipboardCheck, 'Saran before/after', 'Setiap saran dilengkapi contoh kalimat sebelum dan sesudah diperbaiki.'],
-    [Target, 'Skill gap', 'Bandingkan kemampuan Anda dengan kebutuhan peran target.'],
+    [Target, 'Skill gap', 'Bandingkan kemampuan kamu dengan kebutuhan posisi yang dipilih.'],
     [Compass, 'Roadmap 30 hari', 'Langkah belajar mingguan yang fokus pada gap terbesar.'],
 ];
 
@@ -45,7 +45,7 @@ function ContohHasil() {
                         <span className="absolute inset-0 flex items-center justify-center text-xl font-extrabold text-navy">78</span>
                     </div>
                     <div>
-                        <p className="text-xs font-medium text-slate-400">Contoh ilustrasi hasil reviu</p>
+                        <p className="text-xs font-medium text-slate-400">Contoh ilustrasi hasil review</p>
                         <p className="font-bold text-navy">CV Data Analyst</p>
                         <span className="mt-1 inline-block rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700">
               Kuat
@@ -98,14 +98,14 @@ export default function Landing() {
             <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-20 pt-10 sm:px-6 lg:grid-cols-2 lg:pt-16">
                 <div className="fade-up">
           <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-            <Sparkles className="h-3.5 w-3.5" /> Reviu portofolio berbasis AI
+            <Sparkles className="h-3.5 w-3.5" /> Review portofolio berbasis AI
           </span>
                     <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-navy sm:text-5xl">
-                        Tahu persis apa yang kurang dari portofolio Anda.
+                        Tahu persis apa yang kurang dari portofolio kamu.
                     </h1>
                     <p className="mt-5 max-w-lg text-lg text-slate-600">
                         Unggah CV atau portofolio, lalu dapatkan skor, saran yang spesifik, dan roadmap belajar
-                        30 hari menuju peran impian Anda.
+                        30 hari menuju posisi impian kamu.
                     </p>
                     <div className="mt-8 flex flex-wrap gap-3">
                         <Button as={Link} to={user ? '/dashboard' : '/register'} size="lg">
@@ -155,7 +155,7 @@ export default function Landing() {
 
             <section className="bg-slate-50 py-20">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6">
-                    <h2 className="text-3xl font-extrabold text-navy">Yang Anda dapatkan</h2>
+                    <h2 className="text-3xl font-extrabold text-navy">Yang kamu dapatkan</h2>
                     <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                         {fitur.map(([Ikon, judul, isi]) => (
                             <div key={judul} className="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
@@ -172,7 +172,7 @@ export default function Landing() {
 
             <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
                 <div className="rounded-3xl bg-navy px-8 py-14 text-center text-white">
-                    <h2 className="text-3xl font-extrabold">Siap melihat portofolio Anda dari sudut pandang rekruter?</h2>
+                    <h2 className="text-3xl font-extrabold">Siap melihat portofolio kamu dari sudut pandang rekruter?</h2>
                     <div className="mt-8">
                         <Button as={Link} to={user ? '/dashboard' : '/register'} size="lg">
                             Coba sekarang <ArrowRight className="h-4 w-4" />
