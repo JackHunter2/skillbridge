@@ -120,7 +120,7 @@ export default function Admin() {
         <div className="fade-up">
             <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">Panel admin</h1>
             <p className="mt-2 text-slate-500">
-                Statistik dan masukan pengguna. Isi CV dan hasil reviu tidak dapat dilihat dari sini.
+                Statistik dan masukan pengguna. Isi CV dan hasil review tidak dapat dilihat dari sini.
             </p>
 
             {error && (
@@ -163,11 +163,11 @@ export default function Admin() {
                                     <div className="mt-4"><Batang items={ringkas.sebaran_akurasi} /></div>
                                 </section>
                                 <section className={kartu}>
-                                    <h2 className="font-bold text-navy">Peran paling banyak dipilih</h2>
+                                    <h2 className="font-bold text-navy">Posisi paling banyak dipilih</h2>
                                     <div className="mt-4"><Batang items={ringkas.peran_populer} /></div>
                                 </section>
                                 <section className={`${kartu} md:col-span-2`}>
-                                    <h2 className="font-bold text-navy">Model AI yang dipakai (reviu selesai)</h2>
+                                    <h2 className="font-bold text-navy">Model AI yang dipakai (review selesai)</h2>
                                     <div className="mt-4"><Batang items={ringkas.model} /></div>
                                 </section>
                             </div>
@@ -233,21 +233,21 @@ export default function Admin() {
 
             {tab === 'peran' && (
                 <section className={`${kartu} mt-6`}>
-                    <h2 className="font-bold text-navy">Peran buatan pengguna</h2>
+                    <h2 className="font-bold text-navy">Posisi yang dibuat pengguna</h2>
                     <p className="mt-1 text-sm text-slate-500">
-                        Peran yang sering dipakai layak dijadikan peran resmi. Peran resmi muncul untuk semua pengguna.
-                        Skill gap-nya tetap memakai skill umum sampai Anda menambahkan daftar skill khusus lewat database.
+                        Posisi yang sering dipakai layak dijadikan posisi resmi. Posisi resmi muncul untuk semua pengguna.
+                        Skill gap-nya tetap memakai skill umum sampai kamu menambahkan daftar skill khusus lewat database.
                     </p>
                     {!roles ? (
                         <div className="mt-4 h-24 animate-pulse rounded-xl bg-slate-100" />
                     ) : roles.length === 0 ? (
-                        <p className="mt-4 text-sm text-slate-500">Belum ada peran buatan pengguna.</p>
+                        <p className="mt-4 text-sm text-slate-500">Belum ada posisi yang dibuat pengguna.</p>
                     ) : (
                         <div className="mt-4 overflow-x-auto">
                             <table className="w-full text-left text-sm">
                                 <thead className="text-xs uppercase tracking-wider text-slate-400">
                                 <tr>
-                                    <th className="py-2 pr-4">Peran</th><th className="py-2 pr-4">Dibuat oleh</th>
+                                    <th className="py-2 pr-4">Posisi</th><th className="py-2 pr-4">Dibuat oleh</th>
                                     <th className="py-2 pr-4">Pemakai</th><th className="py-2 pr-4">Portofolio</th>
                                     <th className="py-2 pr-4">Tanggal</th><th className="py-2" />
                                 </tr>
@@ -283,8 +283,8 @@ export default function Admin() {
                                 <thead className="text-xs uppercase tracking-wider text-slate-400">
                                 <tr>
                                     <th className="py-2 pr-4">Nama</th><th className="py-2 pr-4">Email</th>
-                                    <th className="py-2 pr-4">Status</th><th className="py-2 pr-4">Peran</th>
-                                    <th className="py-2 pr-4">Portofolio</th><th className="py-2 pr-4">Reviu</th>
+                                    <th className="py-2 pr-4">Status</th><th className="py-2 pr-4">Posisi</th>
+                                    <th className="py-2 pr-4">Portofolio</th><th className="py-2 pr-4">Review</th>
                                     <th className="py-2">Bergabung</th>
                                 </tr>
                                 </thead>
