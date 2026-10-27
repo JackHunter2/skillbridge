@@ -50,11 +50,11 @@ export default function FeedbackForm({ reviewId }) {
         <form onSubmit={kirim} className="bg-white rounded-2xl shadow p-6 mt-6">
             <h2 className="font-semibold text-slate-900">Bantu kami memperbaiki aplikasi ini</h2>
             <p className="text-sm text-slate-500 mt-1">
-                Masukan Anda dipakai untuk tahap pengujian. Semakin spesifik, semakin berguna.
+                Masukan kamu dipakai untuk tahap pengujian. Semakin spesifik, semakin berguna.
             </p>
 
             <div className="mt-4">
-                <p className="text-sm font-medium text-slate-700">Seberapa akurat feedback AI menurut Anda?</p>
+                <p className="text-sm font-medium text-slate-700">Seberapa akurat feedback AI menurut kamu?</p>
                 <div className="flex gap-2 mt-2">
                     {[1, 2, 3, 4, 5].map((n) => (
                         <button type="button" key={n} onClick={() => setForm({ ...form, ai_accuracy: n })}

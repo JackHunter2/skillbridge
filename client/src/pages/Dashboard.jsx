@@ -39,9 +39,9 @@ export default function Dashboard() {
             await new Promise((r) => setTimeout(r, 3000));
             const { data } = await api.get(`/reviews/${reviewId}/status`);
             if (data.status === 'done') return;
-            if (data.status === 'failed') throw new Error(data.message || 'Reviu gagal diproses');
+            if (data.status === 'failed') throw new Error(data.message || 'Review gagal diproses');
         }
-        throw new Error('Reviu memakan waktu terlalu lama. Muat ulang halaman beberapa saat lagi.');
+        throw new Error('Review memakan waktu terlalu lama. Muat ulang halaman beberapa saat lagi.');
     };
 
     const jalankanReviu = async (p) => {
@@ -52,7 +52,7 @@ export default function Dashboard() {
             await tungguSelesai(res.data.review_id);
             navigate(`/reviews/${res.data.review_id}`);
         } catch (err) {
-            setError(err.response?.data?.message || err.message || 'Reviu gagal, coba lagi');
+            setError(err.response?.data?.message || err.message || 'Review gagal, coba lagi');
             setBusyId(null);
         }
     };
@@ -90,7 +90,7 @@ export default function Dashboard() {
                     onConfirm={hapusPortofolio}
                     onCancel={() => !hapusBusy && setHapusTarget(null)}
                 >
-                    Portofolio <strong>{hapusTarget.title}</strong> beserta semua hasil reviu, skill gap, dan
+                    Portofolio <strong>{hapusTarget.title}</strong> beserta semua hasil review, skill gap, dan
                     roadmap-nya akan dihapus permanen. File PDF di server juga ikut dihapus. Tindakan ini tidak bisa dibatalkan.
                 </ConfirmDialog>
             )}
@@ -125,13 +125,13 @@ export default function Dashboard() {
                     <span className={`${ikon} bg-amber-50 text-amber-600`}><Target className="h-5 w-5" /></span>
                     <p className="mt-4 text-xl font-extrabold text-navy">{roleName || '...'}</p>
                     <p className="text-sm text-slate-500">
-                        Peran target <Link to="/onboarding" className="ml-1 font-semibold text-brand-600">Ganti</Link>
+                        Pilih posisi <Link to="/onboarding" className="ml-1 font-semibold text-brand-600">Ganti</Link>
                     </p>
                 </div>
             </div>
 
             <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-                <h2 className="font-bold text-navy">Portofolio Anda</h2>
+                <h2 className="font-bold text-navy">Portofolio kamu</h2>
 
                 {error && (
                     <div className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
@@ -171,7 +171,7 @@ export default function Dashboard() {
                                             </p>
                                             {p.purged ? (
                                                 <p className="mt-0.5 text-xs font-medium text-amber-700">
-                                                    Teks dihapus karena tidak aktif. Hasil reviu tetap tersimpan.
+                                                    Teks dihapus karena tidak aktif. Hasil review tetap tersimpan.
                                                 </p>
                                             ) : p.expires_at ? (
                                                 <p className="mt-0.5 text-xs text-slate-400">
@@ -194,9 +194,9 @@ export default function Dashboard() {
                                             </Button>
                                         )}
                                         <Button size="sm" onClick={() => jalankanReviu(p)} disabled={busyId !== null || Boolean(p.purged)}
-                                                title={p.purged ? 'Teks sudah dihapus. Unggah ulang untuk mereviu lagi.' : undefined}>
+                                                title={p.purged ? 'Teks sudah dihapus. Unggah ulang untuk mereview lagi.' : undefined}>
                                             <Sparkles className="h-4 w-4" />
-                                            {p.latest_review_id ? 'Reviu ulang' : 'Reviu AI'}
+                                            {p.latest_review_id ? 'Review ulang' : 'Review AI'}
                                         </Button>
                                         <button
                                             onClick={() => setHapusTarget(p)}

@@ -128,12 +128,12 @@ export default function Profile() {
     return (
         <div className="fade-up mx-auto max-w-xl">
             <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">Profil</h1>
-            <p className="mt-2 text-slate-500">Atur foto dan data diri Anda.</p>
+            <p className="mt-2 text-slate-500">Atur foto dan data diri kamu.</p>
             {ringkas && (
                 <section className="mt-8 overflow-hidden rounded-2xl bg-navy p-6 text-white">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                         <div>
-                            <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Peran target</p>
+                            <p className="text-xs font-medium uppercase tracking-wider text-slate-400">Posisi dipilih</p>
                             <p className="text-lg font-extrabold">{ringkas.peran || 'Belum dipilih'}</p>
                         </div>
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">
@@ -153,7 +153,7 @@ export default function Profile() {
                             <p className="mt-2 text-2xl font-extrabold">
                                 {ringkas.skor_terbaik != null ? Math.round(ringkas.skor_terbaik) : '-'}
                             </p>
-                            <p className="text-xs text-slate-400">Skor terbaik ({ringkas.reviu} reviu)</p>
+                            <p className="text-xs text-slate-400">Skor terbaik ({ringkas.reviu} review)</p>
                         </div>
                         <div className="rounded-xl bg-white/5 p-4">
                             <TrendingUp className="h-4 w-4 text-slate-400" />
@@ -162,7 +162,7 @@ export default function Profile() {
                                     ? `${ringkas.skor_terbaru - ringkas.skor_pertama >= 0 ? '+' : ''}${Math.round(ringkas.skor_terbaru - ringkas.skor_pertama)}`
                                     : '-'}
                             </p>
-                            <p className="text-xs text-slate-400">Perubahan skor sejak reviu pertama</p>
+                            <p className="text-xs text-slate-400">Perubahan skor sejak review pertama</p>
                         </div>
                         <div className="rounded-xl bg-white/5 p-4">
                             <ListChecks className="h-4 w-4 text-slate-400" />
@@ -229,7 +229,7 @@ export default function Profile() {
                     )}
                 <div className="flex items-center justify-between gap-3">
                     <Button loading={busyProfil}>Simpan perubahan</Button>
-                    <Link to="/onboarding" className="text-sm font-semibold text-brand-600">Ganti peran target</Link>
+                    <Link to="/onboarding" className="text-sm font-semibold text-brand-600">Ganti posisi</Link>
                 </div>
             </form>
         </div>

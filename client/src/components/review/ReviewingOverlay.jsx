@@ -19,7 +19,7 @@ export default function ReviewingOverlay() {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 p-4 backdrop-blur-sm">
             <div className="fade-up w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl">
-                <h2 className="text-lg font-bold text-navy">AI sedang mereviu portofolio Anda</h2>
+                <h2 className="text-lg font-bold text-navy">AI sedang mereview portofolio kamu</h2>
                 <p className="mt-1 text-sm text-slate-500">Mohon tunggu, jangan tutup halaman ini.</p>
 
                 <ul className="mt-6 space-y-3">

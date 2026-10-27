@@ -67,7 +67,7 @@ export default function ReviewResult() {
                 setData(res.data);
                 setItems(res.data.roadmap);
             })
-            .catch((err) => setError(err.response?.data?.message || 'Gagal memuat hasil reviu'));
+            .catch((err) => setError(err.response?.data?.message || 'Gagal memuat hasil review'));
     }, [id]);
 
     useEffect(() => {
@@ -243,12 +243,12 @@ export default function ReviewResult() {
                         <div className="flex flex-wrap items-center justify-between gap-2">
                             <div>
                                 <h2 className="font-bold text-navy">Perkembangan skor</h2>
-                                <p className="text-xs text-slate-500">Semua reviu Anda, urut dari yang paling awal</p>
+                                <p className="text-xs text-slate-500">Semua review kamu, urut dari yang paling awal</p>
                             </div>
                             <span className={`rounded-full px-3 py-1 text-xs font-bold ${
                                 selisih >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'
                             }`}>
-                {selisih >= 0 ? '+' : ''}{selisih} poin sejak reviu pertama
+                {selisih >= 0 ? '+' : ''}{selisih} poin sejak review pertama
               </span>
                         </div>
                         <div className="mt-4 h-52">
@@ -335,7 +335,7 @@ export default function ReviewResult() {
 
             <Panel aktif={tab === 'skill'}>
                 <section className={kartu}>
-                    <h2 className="font-bold text-navy">Skill gap terhadap peran {review.role_name}</h2>
+                    <h2 className="font-bold text-navy">Skill gap terhadap posisi {review.role_name}</h2>
                     <div className="mt-5 space-y-5">
                         {gaps.map((g) => (
                             <div key={g.skill_id} className="print:break-inside-avoid">
@@ -353,12 +353,12 @@ export default function ReviewResult() {
                                          style={{ left: `${(g.required_level / 5) * 100}%`, top: '-4px', height: '18px' }} />
                                 </div>
                                 <p className="mt-1.5 text-xs text-slate-500">
-                                    Level Anda {g.current_level}, dibutuhkan {g.required_level} (skala 0–5)
+                                    Level kamu {g.current_level}, dibutuhkan {g.required_level} (skala 0–5)
                                 </p>
                             </div>
                         ))}
                     </div>
-                    <p className="mt-5 text-xs text-slate-400">Garis gelap menandai level yang dibutuhkan peran target.</p>
+                    <p className="mt-5 text-xs text-slate-400">Garis gelap menandai level yang dibutuhkan posisi yang dipilih.</p>
                 </section>
             </Panel>
 
@@ -367,7 +367,7 @@ export default function ReviewResult() {
                     <div className="flex items-end justify-between gap-4">
                         <div>
                             <h2 className="font-bold text-navy">Roadmap belajar 30 hari</h2>
-                            <p className="mt-1 text-sm text-slate-500 print:hidden">Centang langkah yang sudah Anda selesaikan.</p>
+                            <p className="mt-1 text-sm text-slate-500 print:hidden">Centang langkah yang sudah kamu selesaikan.</p>
                         </div>
                         <p className="text-2xl font-extrabold text-brand-600">{persen}%</p>
                     </div>
@@ -413,7 +413,7 @@ export default function ReviewResult() {
             <div className="print:hidden"><FeedbackForm reviewId={review.review_id} /></div>
 
             <p className="mt-6 text-center text-xs text-slate-400">
-                Reviu dibuat oleh AI dan bersifat masukan awal, bukan penilaian final.
+                Review dibuat oleh AI dan bersifat masukan awal, bukan penilaian final.
             </p>
         </div>
     );

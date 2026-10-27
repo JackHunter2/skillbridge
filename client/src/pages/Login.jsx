@@ -34,7 +34,7 @@ export default function Login() {
     return (
         <AuthShell
             title="Selamat datang kembali"
-            subtitle="Masuk untuk melanjutkan reviu portofolio Anda."
+            subtitle="Masuk untuk melanjutkan review portofolio kamu."
             footer={<>Belum punya akun? <Link to="/register" className="font-semibold text-brand-600">Daftar</Link></>}
         >
             <form onSubmit={kirim} className="space-y-4">
@@ -56,7 +56,7 @@ export default function Login() {
                         </Link>
                     </div>
                     <input name="password" type="password" required value={form.password} onChange={ubah}
-                           className={inputCls} />
+                           placeholder="Password" className={inputCls} />
                 </div>
                 <Button loading={busy} className="w-full">Masuk</Button>
             </form>

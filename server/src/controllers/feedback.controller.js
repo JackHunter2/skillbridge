@@ -21,7 +21,7 @@ export async function saveFeedback(req, res) {
       WHERE r.review_id = ? AND p.user_id = ?`,
         [f.review_id, req.user.id]
     );
-    if (!rv[0]) return res.status(404).json({ message: 'Reviu tidak ditemukan' });
+    if (!rv[0]) return res.status(404).json({ message: 'Review tidak ditemukan' });
 
     const [ada] = await pool.query(
         "SELECT feedback_id FROM user_feedback WHERE user_id = ? AND review_id = ? AND tested_feature = 'hasil_reviu'",
@@ -42,7 +42,7 @@ export async function saveFeedback(req, res) {
             [req.user.id, f.review_id, f.most_helpful, f.most_difficult, f.would_change, f.ai_accuracy]
         );
     }
-    res.status(201).json({ message: 'Terima kasih atas masukan Anda' });
+    res.status(201).json({ message: 'Terima kasih atas masukan kamu' });
 }
 
 export async function getMyFeedback(req, res) {

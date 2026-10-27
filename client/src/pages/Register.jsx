@@ -40,7 +40,7 @@ export default function Register() {
     return (
         <AuthShell
             title="Buat akun"
-            subtitle="Mulai reviu portofolio Anda dalam beberapa menit."
+            subtitle="Mulai review portofolio kamu dalam beberapa menit."
             footer={<>Sudah punya akun? <Link to="/login" className="font-semibold text-brand-600">Masuk</Link></>}
         >
             <form onSubmit={kirim} className="space-y-4">
@@ -51,7 +51,8 @@ export default function Register() {
                 )}
                 <div>
                     <label className={labelCls}>Nama lengkap</label>
-                    <input name="full_name" required value={form.full_name} onChange={ubah} className={inputCls} />
+                    <input name="full_name" required value={form.full_name} onChange={ubah}
+                           placeholder="Isi dengan nama kamu" className={inputCls} />
                 </div>
                 <div>
                     <label className={labelCls}>Email</label>

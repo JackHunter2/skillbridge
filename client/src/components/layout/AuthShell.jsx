@@ -1,18 +1,32 @@
 import { Check } from 'lucide-react';
 import Brand from './Brand';
+import loginBg from '../../assets/login-bg.jpg';
 
 const poin = [
     'Skor portofolio per aspek dalam hitungan detik',
     'Saran perbaikan lengkap dengan contoh before/after',
-    'Skill gap dan roadmap belajar 30 hari sesuai peran target',
+    'Skill gap dan roadmap belajar 30 hari sesuai posisi yang dipilih',
 ];
 
 export default function AuthShell({ title, subtitle, children, footer }) {
     return (
         <div className="grid min-h-screen lg:grid-cols-2">
             <aside className="relative hidden overflow-hidden bg-navy p-12 text-white lg:flex lg:flex-col lg:justify-between">
-                <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-600/30 blur-3xl" />
-                <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-accent-500/20 blur-3xl" />
+                <img
+                    src={loginBg}
+                    alt=""
+                    aria-hidden="true"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover object-[50%_55%]"
+                />
+                <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                        background:
+                            'linear-gradient(to bottom, rgba(11,31,58,0.62), rgba(11,31,58,0.82) 55%, rgba(11,31,58,0.96))',
+                    }}
+                />
                 <div className="relative"><Brand dark /></div>
                 <div className="relative">
                     <h2 className="text-3xl font-extrabold leading-tight">

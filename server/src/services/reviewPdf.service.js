@@ -28,7 +28,7 @@ export function buatLaporanPdf({ review, scores, suggestions, gaps, roadmap }) {
         size: 'A4',
         margin: 50,
         bufferPages: true,
-        info: { Title: `Laporan Reviu - ${bersih(review.title)}`, Author: 'SkillBridge' },
+        info: { Title: `Laporan Review - ${bersih(review.title)}`, Author: 'SkillBridge' },
     });
 
     const M = 50;
@@ -52,7 +52,7 @@ export function buatLaporanPdf({ review, scores, suggestions, gaps, roadmap }) {
     // ---------- Header ----------
     doc.rect(0, 0, W, 118).fill(NAVY);
     doc.font('Helvetica-Bold').fontSize(18).fillColor('#ffffff').text('SkillBridge', M, 30, { lineBreak: false });
-    doc.font('Helvetica').fontSize(10).fillColor('#b8c4d6').text('Laporan Reviu Portofolio', M, 54, { lineBreak: false });
+    doc.font('Helvetica').fontSize(10).fillColor('#b8c4d6').text('Laporan Review Portofolio', M, 54, { lineBreak: false });
     doc.font('Helvetica-Bold').fontSize(15).fillColor('#ffffff')
         .text(bersih(review.title), M, 76, { width: lebar - 110, height: 34, ellipsis: true });
 
@@ -73,7 +73,7 @@ export function buatLaporanPdf({ review, scores, suggestions, gaps, roadmap }) {
         ['Nama', review.full_name],
         ['Status', review.user_type === 'anak_magang' ? 'Anak magang' : 'Fresh graduate'],
         ['Peran target', review.role_name],
-        ['Tanggal reviu', tanggal],
+        ['Tanggal review', tanggal],
     ];
     info.forEach(([k, v], i) => {
         const x = M + (i % 2) * (lebar / 2);
@@ -181,7 +181,7 @@ export function buatLaporanPdf({ review, scores, suggestions, gaps, roadmap }) {
         doc.y = by + 30;
     });
     doc.font('Helvetica').fontSize(8).fillColor(ABU)
-        .text('Garis gelap menandai level yang dibutuhkan peran target.', M, doc.y, { width: lebar });
+        .text('Garis gelap menandai level yang dibutuhkan posisi.', M, doc.y, { width: lebar });
 
     // ---------- Roadmap ----------
     judulBagian('Roadmap belajar 30 hari');
@@ -224,7 +224,7 @@ export function buatLaporanPdf({ review, scores, suggestions, gaps, roadmap }) {
         doc.switchToPage(i);
         doc.page.margins.bottom = 0;
         doc.font('Helvetica').fontSize(8).fillColor(ABU)
-            .text('SkillBridge - Reviu dibuat oleh AI dan bersifat masukan awal, bukan penilaian final.',
+            .text('SkillBridge - Review dibuat oleh AI dan bersifat masukan awal, bukan penilaian final.',
                 M, doc.page.height - 38, { width: lebar - 60, lineBreak: false });
         doc.text(`${i + 1} / ${range.count}`, M + lebar - 50, doc.page.height - 38, { width: 50, align: 'right', lineBreak: false });
     }

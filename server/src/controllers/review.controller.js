@@ -67,11 +67,11 @@ async function prosesReview({ reviewId, roleName, criteria, roleSkills, text, us
             conn.release();
         }
     } catch (err) {
-        console.error('Reviu AI gagal:', err.message);
+        console.error('Review AI gagal:', err.message);
         const pesan =
             err.status === 429 ? 'Kuota AI sedang habis. Tunggu beberapa menit atau coba lagi besok.'
                 : err.status === 503 ? 'Server AI sedang sibuk. Coba lagi dalam satu menit.'
-                    : 'Reviu AI gagal diproses. Coba lagi beberapa saat.';
+                    : 'Review AI gagal diproses. Coba lagi beberapa saat.';
         await pool
             .query("UPDATE ai_reviews SET status = 'failed', summary = ? WHERE review_id = ?", [pesan, reviewId])
             .catch(() => {});
@@ -90,7 +90,7 @@ export async function createReview(req, res) {
     if (!pf[0]) return res.status(404).json({ message: 'Portofolio tidak ditemukan' });
     if (!pf[0].extracted_text) {
         return res.status(410).json({
-            message: 'Teks portofolio ini sudah dihapus karena tidak aktif. Unggah ulang portofolio untuk mereviunya lagi.',
+            message: 'Teks portofolio ini sudah dihapus karena tidak aktif. Unggah ulang portofolio untuk mereviewnya lagi.',
         });
     }
 
@@ -123,10 +123,10 @@ export async function createReview(req, res) {
         if (umum[0]) [roleSkills] = await pool.query(kueriSkill, [umum[0].role_id]);
     }
     if (roleSkills.length === 0) {
-        return res.status(400).json({ message: 'Peran ini belum punya data skill. Hubungi admin.' });
+        return res.status(400).json({ message: 'Posisi ini belum punya data skill. Hubungi admin.' });
     }
     if (roleSkills.length === 0) {
-        return res.status(400).json({ message: 'Peran ini belum punya data skill. Hubungi admin.' });
+        return res.status(400).json({ message: 'Posisi ini belum punya data skill. Hubungi admin.' });
     }
     const [role] = await pool.query('SELECT role_name FROM target_roles WHERE role_id = ?', [pf[0].role_id]);
 
@@ -159,7 +159,7 @@ export async function getReviewStatus(req, res) {
          WHERE r.review_id = ? AND p.user_id = ?`,
         [reviewId, req.user.id]
     );
-    if (!rows[0]) return res.status(404).json({ message: 'Reviu tidak ditemukan' });
+    if (!rows[0]) return res.status(404).json({ message: 'Review tidak ditemukan' });
 
     res.json({
         status: rows[0].status,
@@ -218,7 +218,7 @@ export async function getReview(req, res) {
     if (!Number.isInteger(reviewId)) return res.status(400).json({ message: 'ID tidak valid' });
 
     const data = await ambilHasilReview(reviewId, req.user.id);
-    if (!data) return res.status(404).json({ message: 'Hasil reviu tidak ditemukan' });
+    if (!data) return res.status(404).json({ message: 'Hasil review tidak ditemukan' });
     res.json(data);
 }
 
@@ -227,7 +227,7 @@ export async function downloadPdf(req, res) {
     if (!Number.isInteger(reviewId)) return res.status(400).json({ message: 'ID tidak valid' });
 
     const data = await ambilHasilReview(reviewId, req.user.id);
-    if (!data) return res.status(404).json({ message: 'Hasil reviu tidak ditemukan' });
+    if (!data) return res.status(404).json({ message: 'Hasil review tidak ditemukan' });
 
     const nama = String(data.review.title).replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').slice(0, 40) || 'portofolio';
     res.setHeader('Content-Type', 'application/pdf');

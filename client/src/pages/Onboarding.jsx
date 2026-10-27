@@ -40,7 +40,7 @@ export default function Onboarding() {
     useEffect(() => {
         api.get('/roles')
             .then((res) => setRoles(res.data.roles))
-            .catch(() => setError('Gagal memuat daftar peran'))
+            .catch(() => setError('Gagal memuat daftar posisi'))
             .finally(() => setLoading(false));
     }, []);
 
@@ -56,7 +56,7 @@ export default function Onboarding() {
             updateUser(res.data.user);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Gagal menyimpan peran');
+            setError(err.response?.data?.message || 'Gagal menyimpan posisi');
         } finally {
             setBusy(false);
         }
@@ -71,7 +71,7 @@ export default function Onboarding() {
             updateUser(res.data.user);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Gagal menyimpan peran');
+            setError(err.response?.data?.message || 'Gagal menyimpan posisi');
             setBusyKustom(false);
         }
     };
@@ -79,10 +79,10 @@ export default function Onboarding() {
     return (
         <div className="fade-up mx-auto max-w-5xl">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Langkah 1 dari 2</span>
-            <h1 className="mt-2 text-2xl font-extrabold text-navy sm:text-3xl">Peran apa yang Anda tuju?</h1>
+            <h1 className="mt-2 text-2xl font-extrabold text-navy sm:text-3xl">Posisi apa yang kamu tuju?</h1>
             <p className="mt-2 text-slate-500">
-                Portofolio Anda akan dinilai berdasarkan kebutuhan peran ini. Belum yakin? Pilih
-                <strong> Umum / Lintas Bidang</strong>. Anda bisa menggantinya kapan saja.
+                Portofolio kamu akan dinilai berdasarkan kebutuhan posisi ini. Belum yakin? Pilih
+                <strong> Umum / Lintas Bidang</strong>. kamu bisa menggantinya kapan saja.
             </p>
 
             {error && (
@@ -94,7 +94,7 @@ export default function Onboarding() {
             <div className="relative mt-6">
                 <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <input value={cari} onChange={(e) => setCari(e.target.value)}
-                       placeholder="Cari peran..." className={`${inputCls} mt-0 pl-10`} />
+                       placeholder="Cari posisi..." className={`${inputCls} mt-0 pl-10`} />
             </div>
 
             <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -121,7 +121,7 @@ export default function Onboarding() {
                                 <p className="mt-4 flex flex-wrap items-center gap-2 font-bold text-navy">
                                     {r.role_name}
                                     {r.is_custom === 1 && (
-                                        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700">Peran Anda</span>
+                                        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700">Posisi kamu</span>
                                     )}
                                 </p>
                                 <p className="mt-1 text-sm text-slate-500">{r.description}</p>
@@ -133,7 +133,7 @@ export default function Onboarding() {
                     })}
                 {!loading && tampil.length === 0 && (
                     <p className="text-sm text-slate-500 sm:col-span-2">
-                        Tidak ada peran yang cocok dengan pencarian. Tulis perannya sendiri di bawah.
+                        Tidak ada posisi yang cocok dengan pencarian. Tulis posisinya sendiri di bawah.
                     </p>
                 )}
             </div>
@@ -145,17 +145,17 @@ export default function Onboarding() {
             </div>
 
             <form onSubmit={simpanKustom} className="mt-10 rounded-2xl border border-dashed border-slate-300 bg-white p-6">
-                <h2 className="font-bold text-navy">Peran Anda tidak ada di daftar?</h2>
+                <h2 className="font-bold text-navy">Posisi kamu tidak ada di daftar?</h2>
                 <p className="mt-1 text-sm text-slate-500">
-                    Tulis sendiri perannya. Isi portofolio tetap dinilai sesuai peran yang Anda tulis, sedangkan
+                    Tulis sendiri posisi kamu. Isi portofolio tetap dinilai sesuai posisi yang kamu tulis, sedangkan
                     skill gap memakai kemampuan umum lintas bidang.
                 </p>
-                <label className={`${labelCls} mt-4 block`}>Nama peran</label>
+                <label className={`${labelCls} mt-4 block`}>Nama posisi</label>
                 <div className="flex flex-col gap-3 sm:flex-row">
                     <input value={kustom} onChange={(e) => setKustom(e.target.value)} maxLength={60} required
                            placeholder="Contoh: Data Scientist Kesehatan" className={inputCls} />
                     <Button loading={busyKustom} variant="dark" className="shrink-0 sm:mt-1.5">
-                        <Plus className="h-4 w-4" /> Gunakan peran ini
+                        <Plus className="h-4 w-4" /> Gunakan posisi ini
                     </Button>
                 </div>
             </form>

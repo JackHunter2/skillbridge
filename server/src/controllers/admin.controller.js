@@ -87,7 +87,7 @@ const sel = (v) => {
 
 export async function feedbackCsv(req, res) {
     const rows = await ambilFeedback(bacaFilter(req));
-    const kepala = ['Tanggal', 'Status pengguna', 'Peran target', 'Skor reviu', 'Akurasi AI (1-5)',
+    const kepala = ['Tanggal', 'Status pengguna', 'Posisi dipilih', 'Skor review', 'Akurasi AI (1-5)',
         'Paling membantu', 'Paling sulit', 'Akan diubah'];
 
     const baris = rows.map((r) => [
@@ -124,8 +124,8 @@ export async function promoteRole(req, res) {
         'UPDATE target_roles SET is_custom = 0 WHERE role_id = ? AND is_custom = 1',
         [id]
     );
-    if (hasil.affectedRows === 0) return res.status(404).json({ message: 'Peran buatan pengguna tidak ditemukan' });
-    res.json({ message: 'Peran dijadikan peran resmi' });
+    if (hasil.affectedRows === 0) return res.status(404).json({ message: 'Posisi buatan pengguna tidak ditemukan' });
+    res.json({ message: 'Posisi dijadikan posisi resmi' });
 }
 
 export async function listUsers(req, res) {

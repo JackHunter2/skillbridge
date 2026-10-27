@@ -111,7 +111,7 @@ export default function AppLayout() {
                                     <Settings className="h-4 w-4 text-slate-400" /> Pengaturan
                                 </Link>
                                 <Link to="/onboarding" onClick={tutup} className={item}>
-                                    <Repeat className="h-4 w-4 text-slate-400" /> Ganti peran target
+                                    <Repeat className="h-4 w-4 text-slate-400" /> Ganti posisi
                                 </Link>
                                 <div className="my-1 h-px bg-slate-100" />
                                 <button onClick={keluar} className={`${item} text-red-600 hover:bg-red-50`}>

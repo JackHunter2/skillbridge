@@ -118,11 +118,11 @@ export async function forgotPassword(req, res) {
             to: email,
             subject: 'Atur ulang password SkillBridge',
             text:
-                `Halo ${u.full_name},\n\nKami menerima permintaan untuk mengatur ulang password akun Anda.\n` +
+                `Halo ${u.full_name},\n\nKami menerima permintaan untuk mengatur ulang password akun kamu.\n` +
                 `Buka tautan berikut (berlaku 30 menit):\n${link}\n\n` +
-                `Jika Anda tidak merasa memintanya, abaikan email ini. Password Anda tidak berubah.`,
+                `Jika kamu tidak merasa memintanya, abaikan email ini. Password kamu tidak berubah.`,
             html:
-                `<p>Halo ${u.full_name},</p><p>Kami menerima permintaan untuk mengatur ulang password akun Anda.</p>` +
+                `<p>Halo ${u.full_name},</p><p>Kami menerima permintaan untuk mengatur ulang password akun kamu.</p>` +
                 `<p><a href="${link}" style="background:#1e6fd9;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;display:inline-block">Buat password baru</a></p>` +
                 `<p style="color:#64748b;font-size:13px">Tautan berlaku 30 menit. Jika Anda tidak merasa memintanya, abaikan email ini.</p>`,
         });

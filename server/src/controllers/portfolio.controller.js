@@ -22,7 +22,7 @@ export async function createPortfolio(req, res) {
     const role_id = u[0]?.target_role_id;
     if (!role_id) {
         await hapusFile();
-        return res.status(400).json({ message: 'Pilih peran target terlebih dahulu' });
+        return res.status(400).json({ message: 'Pilih posisi terlebih dahulu' });
     }
 
     let source_type, file_path = null, external_url = null, text = '';
@@ -52,7 +52,7 @@ export async function createPortfolio(req, res) {
             message:
                 source_type === 'file'
                     ? 'Teks di PDF terlalu sedikit. Kemungkinan PDF berupa gambar/scan. Gunakan PDF yang teksnya bisa diblok.'
-                    : 'Tempel isi portofolio Anda minimal 100 karakter agar bisa dinilai AI.',
+                    : 'Tempel isi portofolio kamu minimal 100 karakter agar bisa dinilai AI.',
         });
     }
 
@@ -120,7 +120,7 @@ export async function deletePortfolio(req, res) {
         [id]
     );
     if (jalan[0]) {
-        return res.status(409).json({ message: 'Portofolio sedang direviu. Tunggu hingga selesai, lalu coba lagi.' });
+        return res.status(409).json({ message: 'Portofolio sedang direview. Tunggu hingga selesai, lalu coba lagi.' });
     }
 
     const conn = await pool.getConnection();

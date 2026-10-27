@@ -12,7 +12,7 @@ const masalah = [
 ];
 
 const langkah = [
-    ['Pilih posisi yang diinginkan', 'Data Analyst, UI/UX, Digital Marketing, atau Web Developer.'],
+    ['Pilih posisi yang dibutuhkan', 'Data Analyst, UI/UX, Digital Marketing, atau Web Developer.'],
     ['Unggah portofolio', 'Cukup file PDF atau tempel isi portofolio dari link kamu.'],
     ['Terima hasilnya', 'Skor, saran perbaikan, skill gap, dan roadmap belajar.'],
 ];
@@ -20,7 +20,7 @@ const langkah = [
 const fitur = [
     [Gauge, 'Skor per aspek', 'Kejelasan, bukti dampak, relevansi, dan tampilan dinilai terpisah.'],
     [ClipboardCheck, 'Saran before/after', 'Setiap saran dilengkapi contoh kalimat sebelum dan sesudah diperbaiki.'],
-    [Target, 'Skill gap', 'Bandingkan kemampuan kamu dengan kebutuhan posisi yang dipilih.'],
+    [Target, 'Skill gap', 'Bandingkan kemampuan kamu dengan kebutuhan posisi yang dibutuhkan.'],
     [Compass, 'Roadmap 30 hari', 'Langkah belajar mingguan yang fokus pada gap terbesar.'],
 ];
 

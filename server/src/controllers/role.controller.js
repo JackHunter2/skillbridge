@@ -11,8 +11,8 @@ const customSchema = z.object({
     role_name: z
         .string()
         .trim()
-        .min(3, 'Nama peran minimal 3 karakter')
-        .max(60, 'Nama peran maksimal 60 karakter')
+        .min(3, 'Nama posisi minimal 3 karakter')
+        .max(60, 'Nama posisi maksimal 60 karakter')
         .regex(/^[\p{L}\p{N} &\/().,+-]+$/u, 'Gunakan huruf, angka, dan tanda baca umum saja'),
 });
 
@@ -38,7 +38,7 @@ export async function setTargetRole(req, res) {
         'SELECT role_id FROM target_roles WHERE role_id = ? AND is_active = 1 AND (is_custom = 0 OR created_by = ?)',
         [role_id, req.user.id]
     );
-    if (ada.length === 0) return res.status(404).json({ message: 'Peran tidak ditemukan' });
+    if (ada.length === 0) return res.status(404).json({ message: 'Posisi tidak ditemukan' });
 
     await pool.query('UPDATE users SET target_role_id = ? WHERE user_id = ?', [role_id, req.user.id]);
     res.json({ user: await ambilUser(req.user.id) });
@@ -59,7 +59,7 @@ export async function createCustomRole(req, res) {
         const milikSendiri = Number(ada[0].created_by) === Number(req.user.id);
         if (ada[0].is_custom && !milikSendiri) {
             return res.status(409).json({
-                message: 'Nama peran itu sudah dipakai. Tambahkan detail agar lebih spesifik, misalnya "Data Scientist Kesehatan".',
+                message: 'Nama posisi itu sudah dipakai. Tambahkan detail agar lebih spesifik, misalnya "Data Scientist Kesehatan".',
             });
         }
         roleId = ada[0].role_id; // peran bawaan atau milik sendiri: dipakai langsung
@@ -73,7 +73,7 @@ export async function createCustomRole(req, res) {
         }
         const [hasil] = await pool.query(
             `INSERT INTO target_roles (role_name, field, description, is_custom, created_by)
-       VALUES (?, 'lainnya', 'Peran buatan sendiri', 1, ?)`,
+       VALUES (?, 'lainnya', 'Posisi buatan sendiri', 1, ?)`,
             [nama, req.user.id]
         );
         roleId = hasil.insertId;

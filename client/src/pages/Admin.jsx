@@ -10,7 +10,7 @@ import { getTeks } from '../utils/userType';
 const tabs = [
     ['ringkasan', 'Ringkasan', BarChart3],
     ['feedback', 'Feedback', MessageSquare],
-    ['peran', 'Peran', Tags],
+    ['peran', 'Posisi', Tags],
     ['pengguna', 'Pengguna', Users],
 ];
 
@@ -107,7 +107,7 @@ export default function Admin() {
     };
 
     const jadikanResmi = async (r) => {
-        if (!window.confirm(`Jadikan "${r.role_name}" peran resmi? Semua pengguna akan melihatnya di daftar peran.`)) return;
+        if (!window.confirm(`Jadikan "${r.role_name}" posisi resmi? Semua pengguna akan melihatnya di daftar posisi.`)) return;
         try {
             await api.post(`/admin/roles/${r.role_id}/promote`);
             setRoles((list) => list.filter((x) => x.role_id !== r.role_id));
@@ -150,7 +150,7 @@ export default function Admin() {
                                 <Statistik Ikon={Users} nilai={ringkas.pengguna.total} label="Pengguna"
                                            sub={`${ringkas.pengguna.fresh} fresh graduate, ${ringkas.pengguna.magang} anak magang`} />
                                 <Statistik Ikon={FolderOpen} nilai={ringkas.portofolio} label="Portofolio diunggah" />
-                                <Statistik Ikon={Gauge} nilai={ringkas.reviu.selesai} label="Reviu selesai"
+                                <Statistik Ikon={Gauge} nilai={ringkas.reviu.selesai} label="Review selesai"
                                            sub={`${ringkas.reviu.gagal} gagal, ${ringkas.reviu.berjalan} berjalan`} />
                                 <Statistik Ikon={BarChart3} nilai={ringkas.reviu.rata_skor} label="Rata-rata skor portofolio" />
                                 <Statistik Ikon={MessageSquare} nilai={ringkas.feedback.total} label="Feedback masuk" />
@@ -233,7 +233,7 @@ export default function Admin() {
 
             {tab === 'peran' && (
                 <section className={`${kartu} mt-6`}>
-                    <h2 className="font-bold text-navy">Posisi yang dibuat pengguna</h2>
+                    <h2 className="font-bold text-navy">Posisi buatan pengguna</h2>
                     <p className="mt-1 text-sm text-slate-500">
                         Posisi yang sering dipakai layak dijadikan posisi resmi. Posisi resmi muncul untuk semua pengguna.
                         Skill gap-nya tetap memakai skill umum sampai kamu menambahkan daftar skill khusus lewat database.
@@ -241,7 +241,7 @@ export default function Admin() {
                     {!roles ? (
                         <div className="mt-4 h-24 animate-pulse rounded-xl bg-slate-100" />
                     ) : roles.length === 0 ? (
-                        <p className="mt-4 text-sm text-slate-500">Belum ada posisi yang dibuat pengguna.</p>
+                        <p className="mt-4 text-sm text-slate-500">Belum ada posisi buatan pengguna.</p>
                     ) : (
                         <div className="mt-4 overflow-x-auto">
                             <table className="w-full text-left text-sm">

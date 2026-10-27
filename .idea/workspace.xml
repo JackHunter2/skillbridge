@@ -5,26 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="005e2fa6-3d88-472d-be62-cdef80a2ec8f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/layout/AdminRoute.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Admin.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/utils/theme.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/controllers/admin.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/middlewares/admin.middleware.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/routes/admin.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/apple-touch-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/favicon-32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/favicon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/files.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/login-bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/logo-mark-512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/logo-mark.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/6e8b2757-3909-4148-969d-a0429728cdd4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/6e8b2757-3909-4148-969d-a0429728cdd4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/6e8b2757-3909-4148-969d-a0429728cdd4/storage_v2/_src_/schema/upskilling_platform.xjOfJw.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/6e8b2757-3909-4148-969d-a0429728cdd4/storage_v2/_src_/schema/upskilling_platform.xjOfJw.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/assets/hero.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/assets/react.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/assets/vite.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/layout/AppLayout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/AppLayout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/layout/AuthShell.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/AuthShell.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/layout/Brand.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/layout/Brand.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/review/FeedbackForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/review/FeedbackForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/review/ReviewingOverlay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/review/ReviewingOverlay.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Admin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Admin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Landing.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Landing.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Onboarding.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Register.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/ReviewResult.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ReviewResult.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Settings.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/utils/userType.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utils/userType.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/profile.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/profile.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/user.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/user.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/admin.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/admin.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/feedback.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/feedback.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/portfolio.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/portfolio.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/review.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/review.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/role.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/role.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/services/reviewPdf.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/reviewPdf.service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +74,10 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "master",
+    "database.data.extractors.current.export.id": "SQL Inserts",
+    "git-widget-placeholder": "Rebasing main",
     "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "E:/Pelatihan WNR4/upskilling-platform/client/src/assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,6 +95,10 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Pelatihan WNR4\upskilling-platform\client\src\assets" />
+      <recent name="E:\Pelatihan WNR4\upskilling-platform\database" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Pelatihan WNR4\upskilling-platform\server\src\utils" />
     </key>
@@ -97,7 +119,9 @@
       <updated>1792545111048</updated>
       <workItem from="1792545113499" duration="25873000" />
       <workItem from="1792629059162" duration="24059000" />
-      <workItem from="1792715536128" duration="16681000" />
+      <workItem from="1792715536128" duration="16895000" />
+      <workItem from="1792746517293" duration="19214000" />
+      <workItem from="1793061033760" duration="6205000" />
     </task>
     <servers />
   </component>
