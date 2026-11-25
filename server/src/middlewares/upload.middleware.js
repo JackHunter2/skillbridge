@@ -3,7 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 
-const dir = path.resolve('uploads');
+const dir = process.env.VERCEL
+    ? path.join('/tmp', 'uploads')
+    : path.resolve('uploads');
+
 fs.mkdirSync(dir, { recursive: true });
 
 const storage = multer.diskStorage({
